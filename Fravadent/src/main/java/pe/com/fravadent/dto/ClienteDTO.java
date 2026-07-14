@@ -1,0 +1,44 @@
+package pe.com.fravadent.dto;
+
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import pe.com.fravadent.dto.base.BaseDTO;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = false)
+@SuperBuilder
+public class ClienteDTO extends BaseDTO {
+    private String estado;
+
+    private TipoDocumentoDTO tipoDocumento;
+
+    private String numeroDocumento;
+
+    private String nombres;
+
+    private String apellidoPaterno;
+
+    private String apellidoMaterno;
+
+    private String razonSocial;
+
+    private String telefono;
+
+    private String email;
+
+    private String direccion;
+
+    private DistritoDTO distrito;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaRegistro;
+}
