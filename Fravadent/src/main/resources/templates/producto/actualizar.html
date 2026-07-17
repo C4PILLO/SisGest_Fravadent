@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head('Editar producto')}"></head>
+
+<body>
+    <nav th:replace="~{layout/base :: navbar}"></nav>
+
+    <main class="container py-4">
+
+        <h1 class="h4 fw-bold mb-3">
+            <i class="bi bi-pencil-square me-1"></i> Editar producto
+        </h1>
+
+        <!--
+          PENDIENTE (backend): mismo pendiente que en registrar.html — cargarCombos()
+          en ProductoController debe agregar "categorias", "marcas", "unidadmedidas".
+          Además, para que el <select> ya muestre seleccionada la opción actual del
+          producto, cada <option> debe comparar contra el código actual, por ejemplo:
+            th:selected="${c.codigo == producto.categoria?.codigo}"
+        -->
+
+        <div class="card border-0 shadow-sm" style="max-width:700px;">
+            <div class="card-body p-4">
+
+                <form th:action="@{/producto/actualizar/{id}(id=${producto.codigo})}"
+                      th:object="${producto}" method="post">
+
+                    <div class="mb-2">
+                        <span class="text-muted small">Código: <span th:text="${producto.codigo}">0</span></span>
+                    </div>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label for="codigoSku" class="form-label small fw-semibold">SKU</label>
+                            <input type="text" class="form-control" id="codigoSku" th:field="*{codigoSku}"
+                                   required maxlength="60">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label for="nombreDescripcion" class="form-label small fw-semibold">Nombre / Descripción</label>
+                            <input type="text" class="form-control" id="nombreDescripcion" th:field="*{nombreDescripcion}"
+                                   required maxlength="300">
+                        </div>
+
+                        <!-- Categoría -->
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Categoría</label>
+                            <input type="text" class="form-control" disabled
+                                   th:value="${producto.categoria != null} ? ${producto.categoria.nombre} : ''"
+                                   placeholder="Pendiente de combo (backend)">
+                            <!--
+                            <select class="form-select" th:field="*{categoria.codigo}" required>
+                                <option th:each="c : ${categorias}" th:value="${c.codigo}" th:text="${c.nombre}"
+                                        th:selected="${producto.categoria != null and c.codigo == producto.categoria.codigo}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <!-- Marca -->
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Marca</label>
+                            <input type="text" class="form-control" disabled
+                                   th:value="${producto.marca != null} ? ${producto.marca.nombre} : ''"
+                                   placeholder="Pendiente de combo (backend)">
+                            <!--
+                            <select class="form-select" th:field="*{marca.codigo}" required>
+                                <option th:each="m : ${marcas}" th:value="${m.codigo}" th:text="${m.nombre}"
+                                        th:selected="${producto.marca != null and m.codigo == producto.marca.codigo}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <!-- Unidad de medida -->
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Unidad de medida</label>
+                            <input type="text" class="form-control" disabled
+                                   th:value="${producto.unidadMedida != null} ? ${producto.unidadMedida.nombre} : ''"
+                                   placeholder="Pendiente de combo (backend)">
+                            <!--
+                            <select class="form-select" th:field="*{unidadMedida.codigo}" required>
+                                <option th:each="u : ${unidadmedidas}" th:value="${u.codigo}" th:text="${u.nombre}"
+                                        th:selected="${producto.unidadMedida != null and u.codigo == producto.unidadMedida.codigo}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="precioCompra" class="form-label small fw-semibold">Precio compra (S/)</label>
+                            <input type="number" step="0.01" min="0" class="form-control" id="precioCompra"
+                                   th:field="*{precioCompra}" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="precioVenta" class="form-label small fw-semibold">Precio venta (S/)</label>
+                            <input type="number" step="0.01" min="0" class="form-control" id="precioVenta"
+                                   th:field="*{precioVenta}" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="stockActual" class="form-label small fw-semibold">Stock actual</label>
+                            <input type="number" min="0" class="form-control" id="stockActual"
+                                   th:field="*{stockActual}" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="stockMinimo" class="form-label small fw-semibold">Stock mínimo</label>
+                            <input type="number" min="0" class="form-control" id="stockMinimo"
+                                   th:field="*{stockMinimo}" required>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end mt-4">
+                        <a th:href="@{/producto/listar}" class="btn btn-outline-secondary">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-login">
+                            <i class="bi bi-check-lg me-1"></i> Guardar cambios
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+    <th:block th:replace="~{layout/base :: scripts}"></th:block>
+
+</body>
+</html>

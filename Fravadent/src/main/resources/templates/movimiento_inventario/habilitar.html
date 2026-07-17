@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head('Habilitar movimientos')}"></head>
+
+<body>
+    <nav th:replace="~{layout/base :: navbar}"></nav>
+
+    <main class="container-fluid py-4 px-4">
+
+        <!--
+          PENDIENTE (backend): depende del mismo bug de "estado" que registrar.html.
+          Evaluar con el equipo si esta pantalla tiene sentido para movimientos de
+          inventario (un movimiento ya ocurrido normalmente no se "deshabilita") —
+          si deciden que no, se puede quitar esta vista y su acceso del menú.
+        -->
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1 class="h4 fw-bold mb-0">Habilitar / Deshabilitar movimientos</h1>
+                <p class="text-muted small mb-0">Aquí ves todos los movimientos, activos e inactivos.</p>
+            </div>
+            <a th:href="@{/movimiento_inventario/listar}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Volver al listado
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-fravadent table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width:80px">Código</th>
+                                <th>Producto</th>
+                                <th>Tipo</th>
+                                <th style="width:120px">Estado</th>
+                                <th style="width:160px" class="text-end">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item : ${movimientoinventarios}">
+                                <td th:text="${item.codigo}">1</td>
+                                <td th:text="${item.producto != null} ? ${item.producto.nombreDescripcion} : '-'">Producto</td>
+                                <td th:text="${item.tipoMovimiento != null} ? ${item.tipoMovimiento.nombre} : '-'">Entrada</td>
+                                <td>
+                                    <span th:if="${item.estado == 'A'}" class="badge bg-success">Activo</span>
+                                    <span th:unless="${item.estado == 'A'}" class="badge bg-secondary">Inactivo</span>
+                                </td>
+                                <td class="text-end">
+                                    <a th:if="${item.estado == 'A'}"
+                                       th:href="@{/movimiento_inventario/deshabilitar/{id}(id=${item.codigo})}"
+                                       class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-toggle-off me-1"></i> Deshabilitar
+                                    </a>
+                                    <a th:unless="${item.estado == 'A'}"
+                                       th:href="@{/movimiento_inventario/habilitar/{id}(id=${item.codigo})}"
+                                       class="btn btn-sm btn-outline-success">
+                                        <i class="bi bi-toggle-on me-1"></i> Habilitar
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:if="${movimientoinventarios.isEmpty()}">
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    No hay movimientos registrados todavía.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+    <th:block th:replace="~{layout/base :: scripts}"></th:block>
+
+</body>
+</html>

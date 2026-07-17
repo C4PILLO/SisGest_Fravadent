@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head('Nuevo movimiento')}"></head>
+
+<body>
+    <nav th:replace="~{layout/base :: navbar}"></nav>
+
+    <main class="container py-4">
+
+        <h1 class="h4 fw-bold mb-3">
+            <i class="bi bi-plus-circle me-1"></i> Nuevo movimiento de inventario
+        </h1>
+
+        <!--
+          PENDIENTE (backend) — 2 bloqueos distintos:
+
+          1) Bug de esquema (igual que despacho): MovimientoInventarioEntity tiene un
+             campo "estado" que no existe en la tabla real. Cualquier consulta va a
+             fallar hasta resolverlo.
+
+          2) Combos: cargarCombos() en MovimientoInventarioController debe agregar:
+               "productos"       -> List<ProductoDTO>
+               "tipomovimientos" -> List<TipoMovimientoDTO>
+               "usuarios"        -> List<UsuarioDTO>
+             Los <select> reales están comentados más abajo.
+        -->
+
+        <div class="alert alert-warning small mb-3" style="max-width:600px;">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            Este módulo no va a funcionar todavía por el mismo desajuste de esquema
+            que <code>despacho</code>. Ver comentario en el código fuente.
+        </div>
+
+        <div class="card border-0 shadow-sm" style="max-width:600px;">
+            <div class="card-body p-4">
+
+                <form th:action="@{/movimiento_inventario/registrar}" th:object="${movimientoinventario}" method="post">
+
+                    <div class="row g-3">
+
+                        <!-- Producto -->
+                        <div class="col-12">
+                            <label class="form-label small fw-semibold">Producto</label>
+                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
+                            <!--
+                            <select class="form-select" th:field="*{producto.codigo}" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="p : ${productos}" th:value="${p.codigo}" th:text="${p.nombreDescripcion}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <!-- Tipo de movimiento -->
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Tipo de movimiento</label>
+                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
+                            <!--
+                            <select class="form-select" th:field="*{tipoMovimiento.codigo}" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="t : ${tipomovimientos}" th:value="${t.codigo}" th:text="${t.nombre}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="cantidad" class="form-label small fw-semibold">Cantidad</label>
+                            <input type="number" min="1" class="form-control" id="cantidad" th:field="*{cantidad}" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="referenciaTipo" class="form-label small fw-semibold">Referencia (tipo)</label>
+                            <input type="text" class="form-control" id="referenciaTipo" th:field="*{referenciaTipo}"
+                                   placeholder="Ej: VENTA, COMPRA, AJUSTE" maxlength="20">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="referenciaId" class="form-label small fw-semibold">Referencia (código)</label>
+                            <input type="number" class="form-control" id="referenciaId" th:field="*{referenciaId}">
+                        </div>
+
+                        <!-- Usuario -->
+                        <div class="col-12">
+                            <label class="form-label small fw-semibold">Usuario</label>
+                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
+                            <!--
+                            <select class="form-select" th:field="*{usuario.codigo}" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="u : ${usuarios}" th:value="${u.codigo}"
+                                        th:text="${u.nombres + ' ' + u.apellidoPaterno}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <div class="col-12">
+                            <label for="observacion" class="form-label small fw-semibold">Observación</label>
+                            <textarea class="form-control" id="observacion" th:field="*{observacion}" rows="2" maxlength="255"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end mt-4">
+                        <a th:href="@{/movimiento_inventario/listar}" class="btn btn-outline-secondary">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-login">
+                            <i class="bi bi-check-lg me-1"></i> Guardar
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+    <th:block th:replace="~{layout/base :: scripts}"></th:block>
+
+</body>
+</html>

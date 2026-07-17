@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head('Editar cliente')}"></head>
+
+<body>
+    <nav th:replace="~{layout/base :: navbar}"></nav>
+
+    <main class="container py-4">
+
+        <h1 class="h4 fw-bold mb-3">
+            <i class="bi bi-pencil-square me-1"></i> Editar cliente
+        </h1>
+
+        <!--
+          PENDIENTE (backend): mismo pendiente que en registrar.html — cargarCombos()
+          en ClienteController debe agregar "tipodocumentos" y "distritos" al Model.
+        -->
+
+        <div class="card border-0 shadow-sm" style="max-width:700px;">
+            <div class="card-body p-4">
+
+                <div class="mb-2">
+                    <span class="text-muted small">Código: <span th:text="${cliente.codigo}">0</span></span>
+                </div>
+
+                <form th:action="@{/cliente/actualizar/{id}(id=${cliente.codigo})}" th:object="${cliente}" method="post">
+
+                    <div class="row g-3">
+
+                        <!-- Tipo de documento -->
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Tipo de documento</label>
+                            <input type="text" class="form-control" disabled
+                                   th:value="${cliente.tipoDocumento != null} ? ${cliente.tipoDocumento.nombre} : ''"
+                                   placeholder="Pendiente de combo (backend)">
+                            <!--
+                            <select class="form-select" th:field="*{tipoDocumento.codigo}" required>
+                                <option th:each="t : ${tipodocumentos}" th:value="${t.codigo}" th:text="${t.nombre}"
+                                        th:selected="${cliente.tipoDocumento != null and t.codigo == cliente.tipoDocumento.codigo}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <div class="col-md-8">
+                            <label for="numeroDocumento" class="form-label small fw-semibold">N° de documento</label>
+                            <input type="text" class="form-control" id="numeroDocumento" th:field="*{numeroDocumento}"
+                                   required maxlength="20">
+                        </div>
+
+                        <div class="col-12">
+                            <hr class="my-1">
+                            <p class="text-muted small mb-0">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Completa "Nombres y apellidos" para persona natural, o "Razón social" si es empresa.
+                            </p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="nombres" class="form-label small fw-semibold">Nombres</label>
+                            <input type="text" class="form-control" id="nombres" th:field="*{nombres}" maxlength="80">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="apellidoPaterno" class="form-label small fw-semibold">Apellido paterno</label>
+                            <input type="text" class="form-control" id="apellidoPaterno" th:field="*{apellidoPaterno}" maxlength="50">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="apellidoMaterno" class="form-label small fw-semibold">Apellido materno</label>
+                            <input type="text" class="form-control" id="apellidoMaterno" th:field="*{apellidoMaterno}" maxlength="50">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="razonSocial" class="form-label small fw-semibold">Razón social (si es empresa)</label>
+                            <input type="text" class="form-control" id="razonSocial" th:field="*{razonSocial}" maxlength="150">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="telefono" class="form-label small fw-semibold">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" th:field="*{telefono}" maxlength="20">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="email" class="form-label small fw-semibold">Email</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}" maxlength="100">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label for="direccion" class="form-label small fw-semibold">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" th:field="*{direccion}" maxlength="150">
+                        </div>
+
+                        <!-- Distrito -->
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Distrito</label>
+                            <input type="text" class="form-control" disabled
+                                   th:value="${cliente.distrito != null} ? ${cliente.distrito.nombre} : ''"
+                                   placeholder="Pendiente de combo (backend)">
+                            <!--
+                            <select class="form-select" th:field="*{distrito.codigo}" required>
+                                <option th:each="d : ${distritos}" th:value="${d.codigo}" th:text="${d.nombre}"
+                                        th:selected="${cliente.distrito != null and d.codigo == cliente.distrito.codigo}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end mt-4">
+                        <a th:href="@{/cliente/listar}" class="btn btn-outline-secondary">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-login">
+                            <i class="bi bi-check-lg me-1"></i> Guardar cambios
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+    <th:block th:replace="~{layout/base :: scripts}"></th:block>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head('Nueva venta')}"></head>
+
+<body>
+    <nav th:replace="~{layout/base :: navbar}"></nav>
+
+    <main class="container py-4">
+
+        <h1 class="h4 fw-bold mb-3">
+            <i class="bi bi-cart-check me-1"></i> Nueva venta
+        </h1>
+
+        <!--
+          PENDIENTE (backend):
+
+          1) Bug de esquema: VentaEntity/DetalleVentaEntity tienen un campo "estado"
+             que no existe en las tablas reales — el POST a /venta/transaccional va
+             a fallar al guardar el detalle hasta que se resuelva.
+
+          2) Combos: cargarCombos() en VentaController debe agregar "clientes",
+             "tipocomprobantes", "metodopagos", "estadoventas", "productos".
+
+          MIENTRAS TANTO uso campos de "código" numérico visibles (no deshabilitados,
+          a diferencia de otros módulos) para Cliente/Tipo Comprobante/Método de
+          Pago/Estado/Producto — así todo el flujo de guardado (incluyendo el POST
+          JSON a /venta/transaccional) se puede probar hoy con IDs reales de tu BD,
+          sin esperar los combos. Cuando existan, reemplaza cada bloque de "código
+          temporal" por el <select> comentado justo debajo.
+        -->
+
+        <div class="alert alert-warning small mb-3">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            El guardado va a fallar hasta que se resuelva el bug de "estado" en
+            <code>VentaEntity</code>/<code>DetalleVentaEntity</code>. Ver comentario en el código fuente.
+        </div>
+
+        <form id="formVenta">
+
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-white fw-semibold">Datos de la venta</div>
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label for="nroComprobante" class="form-label small fw-semibold">N° de comprobante</label>
+                            <input type="text" class="form-control" id="nroComprobante"
+                                   placeholder="Ej: B001-000001" required maxlength="20">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="fechaHora" class="form-label small fw-semibold">Fecha y hora</label>
+                            <input type="datetime-local" class="form-control" id="fechaHora" required>
+                        </div>
+
+                        <!-- Tipo de comprobante -->
+                        <div class="col-md-4">
+                            <label for="tipoComprobanteId" class="form-label small fw-semibold">
+                                Tipo de comprobante <span class="text-muted fw-normal">(código, temporal)</span>
+                            </label>
+                            <input type="number" class="form-control" id="tipoComprobanteId"
+                                   placeholder="Ej: 1 = Boleta" required>
+                            <!--
+                            <select class="form-select" id="tipoComprobanteId" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="t : ${tipocomprobantes}" th:value="${t.codigo}" th:text="${t.nombre}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <!-- Cliente -->
+                        <div class="col-md-4">
+                            <label for="clienteId" class="form-label small fw-semibold">
+                                Cliente <span class="text-muted fw-normal">(código, temporal)</span>
+                            </label>
+                            <input type="number" class="form-control" id="clienteId"
+                                   placeholder="Código de cliente" required>
+                            <!--
+                            <select class="form-select" id="clienteId" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="c : ${clientes}" th:value="${c.codigo}"
+                                        th:text="${c.nombres + ' ' + c.apellidoPaterno}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <!-- Método de pago -->
+                        <div class="col-md-4">
+                            <label for="metodoPagoId" class="form-label small fw-semibold">
+                                Método de pago <span class="text-muted fw-normal">(código, temporal)</span>
+                            </label>
+                            <input type="number" class="form-control" id="metodoPagoId"
+                                   placeholder="Ej: 1 = Efectivo" required>
+                            <!--
+                            <select class="form-select" id="metodoPagoId" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="m : ${metodopagos}" th:value="${m.codigo}" th:text="${m.nombre}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <!-- Estado de venta -->
+                        <div class="col-md-4">
+                            <label for="estadoVentaId" class="form-label small fw-semibold">
+                                Estado <span class="text-muted fw-normal">(código, temporal)</span>
+                            </label>
+                            <input type="number" class="form-control" id="estadoVentaId"
+                                   placeholder="Ej: 1 = Pendiente" required>
+                            <!--
+                            <select class="form-select" id="estadoVentaId" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="e : ${estadoventas}" th:value="${e.codigo}" th:text="${e.nombre}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-white fw-semibold d-flex justify-content-between align-items-center">
+                    <span>Detalle de productos</span>
+                    <button type="button" class="btn btn-sm btn-login" onclick="agregarFila()">
+                        <i class="bi bi-plus-lg me-1"></i> Agregar producto
+                    </button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-fravadent align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th style="width:35%">
+                                        Producto <span class="text-muted fw-normal small">(código, temporal)</span>
+                                    </th>
+                                    <th style="width:15%">Cantidad</th>
+                                    <th style="width:20%">Precio unitario (S/)</th>
+                                    <th style="width:20%" class="text-end">Subtotal (S/)</th>
+                                    <th style="width:10%"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="detalleBody">
+                                <!-- Filas agregadas dinámicamente por JS -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-end fw-semibold">Total:</td>
+                                    <td class="text-end fw-bold" id="montoTotal">S/ 0.00</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <p class="text-muted small px-3 pb-3 mb-0" id="mensajeVacio">
+                        Todavía no agregas productos. Click en "Agregar producto".
+                    </p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 justify-content-end">
+                <a th:href="@{/venta/listar}" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-login">
+                    <i class="bi bi-check-lg me-1"></i> Registrar venta
+                </button>
+            </div>
+
+        </form>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+    <th:block th:replace="~{layout/base :: scripts}"></th:block>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const URL_TRANSACCIONAL = /*[[@{/venta/transaccional}]]*/ '/fravadent/venta/transaccional';
+        const URL_LISTAR = /*[[@{/venta/listar}]]*/ '/fravadent/venta/listar';
+        /*]]>*/
+
+        let contadorFila = 0;
+
+        function actualizarMensajeVacio() {
+            const filas = document.querySelectorAll('#detalleBody tr').length;
+            document.getElementById('mensajeVacio').style.display = filas === 0 ? 'block' : 'none';
+        }
+
+        function agregarFila() {
+            contadorFila++;
+            const tbody = document.getElementById('detalleBody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="number" class="form-control form-control-sm" data-field="producto" placeholder="Código producto" required></td>
+                <td><input type="number" class="form-control form-control-sm" data-field="cantidad" min="1" value="1" required></td>
+                <td><input type="number" step="0.01" min="0" class="form-control form-control-sm" data-field="precio" required></td>
+                <td class="text-end"><span data-field="subtotal">0.00</span></td>
+                <td class="text-end">
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove(); calcularTotales();">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+            tr.querySelectorAll('input').forEach(inp => inp.addEventListener('input', calcularTotales));
+            actualizarMensajeVacio();
+        }
+
+        function calcularTotales() {
+            let total = 0;
+            document.querySelectorAll('#detalleBody tr').forEach(tr => {
+                const cantidad = parseFloat(tr.querySelector('[data-field="cantidad"]').value) || 0;
+                const precio = parseFloat(tr.querySelector('[data-field="precio"]').value) || 0;
+                const subtotal = cantidad * precio;
+                tr.querySelector('[data-field="subtotal"]').textContent = subtotal.toFixed(2);
+                total += subtotal;
+            });
+            document.getElementById('montoTotal').textContent = 'S/ ' + total.toFixed(2);
+            actualizarMensajeVacio();
+        }
+
+        // Fecha/hora actual por defecto
+        document.addEventListener('DOMContentLoaded', () => {
+            const ahora = new Date();
+            ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset());
+            document.getElementById('fechaHora').value = ahora.toISOString().slice(0, 16);
+        });
+
+        document.getElementById('formVenta').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const filas = document.querySelectorAll('#detalleBody tr');
+            if (filas.length === 0) {
+                alert('Agrega al menos un producto al detalle.');
+                return;
+            }
+
+            const detalles = [];
+            let total = 0;
+            for (const tr of filas) {
+                const producto = parseInt(tr.querySelector('[data-field="producto"]').value);
+                const cantidad = parseInt(tr.querySelector('[data-field="cantidad"]').value);
+                const precio = parseFloat(tr.querySelector('[data-field="precio"]').value);
+                if (!producto || !cantidad || isNaN(precio)) {
+                    alert('Revisa que todas las filas del detalle tengan producto, cantidad y precio.');
+                    return;
+                }
+                const subtotal = cantidad * precio;
+                total += subtotal;
+                detalles.push({
+                    producto: { codigo: producto },
+                    cantidad: cantidad,
+                    precioUnitario: precio,
+                    subtotal: subtotal
+                });
+            }
+
+            const payload = {
+                venta: {
+                    nroComprobante: document.getElementById('nroComprobante').value,
+                    fechaHora: document.getElementById('fechaHora').value,
+                    tipoComprobante: { codigo: parseInt(document.getElementById('tipoComprobanteId').value) },
+                    cliente: { codigo: parseInt(document.getElementById('clienteId').value) },
+                    metodoPago: { codigo: parseInt(document.getElementById('metodoPagoId').value) },
+                    estadoVenta: { codigo: parseInt(document.getElementById('estadoVentaId').value) },
+                    montoTotal: total
+                },
+                detalles: detalles
+            };
+
+            try {
+                const resp = await fetch(URL_TRANSACCIONAL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (resp.ok) {
+                    window.location.href = URL_LISTAR;
+                } else {
+                    const err = await resp.text();
+                    alert('No se pudo registrar la venta:\n' + err);
+                }
+            } catch (err) {
+                alert('Error de conexión: ' + err);
+            }
+        });
+    </script>
+
+</body>
+</html>

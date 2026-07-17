@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head('Productos')}"></head>
+
+<body>
+    <nav th:replace="~{layout/base :: navbar}"></nav>
+
+    <main class="container-fluid py-4 px-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1 class="h4 fw-bold mb-0">Productos</h1>
+                <p class="text-muted small mb-0">Listado de productos activos.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a th:href="@{/producto/habilitar_vista}" class="btn btn-outline-secondary">
+                    <i class="bi bi-toggle2-on me-1"></i> Habilitar / Deshabilitar
+                </a>
+                <a th:href="@{/producto/registrar}" class="btn btn-login">
+                    <i class="bi bi-plus-lg me-1"></i> Nuevo producto
+                </a>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-fravadent table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width:80px">Código</th>
+                                <th>SKU</th>
+                                <th>Nombre / Descripción</th>
+                                <th>Categoría</th>
+                                <th>Marca</th>
+                                <th>U. Medida</th>
+                                <th class="text-end">Precio venta</th>
+                                <th class="text-end">Stock</th>
+                                <th style="width:100px" class="text-end">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item : ${productos}">
+                                <td th:text="${item.codigo}">1</td>
+                                <td th:text="${item.codigoSku}">SKU-0001</td>
+                                <td th:text="${item.nombreDescripcion}">Nombre del producto</td>
+                                <td th:text="${item.categoria != null} ? ${item.categoria.nombre} : '-'">Categoría</td>
+                                <td th:text="${item.marca != null} ? ${item.marca.nombre} : '-'">Marca</td>
+                                <td th:text="${item.unidadMedida != null} ? ${item.unidadMedida.nombre} : '-'">Unidad</td>
+                                <td class="text-end" th:text="${'S/ ' + #numbers.formatDecimal(item.precioVenta, 1, 2)}">S/ 0.00</td>
+                                <td class="text-end">
+                                    <span th:text="${item.stockActual}">0</span>
+                                    <span th:if="${item.stockMinimo != null and item.stockActual != null and item.stockActual <= item.stockMinimo}"
+                                          class="badge bg-danger ms-1" title="Stock en o por debajo del mínimo">bajo</span>
+                                </td>
+                                <td class="text-end">
+                                    <a th:href="@{/producto/actualizar/{id}(id=${item.codigo})}"
+                                       class="btn btn-sm btn-outline-primary" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:if="${productos.isEmpty()}">
+                                <td colspan="9" class="text-center text-muted py-4">
+                                    No hay productos registrados todavía.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+    <th:block th:replace="~{layout/base :: scripts}"></th:block>
+
+</body>
+</html>

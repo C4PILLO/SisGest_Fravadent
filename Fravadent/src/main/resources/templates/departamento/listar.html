@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head('Departamentos')}"></head>
+
+<body>
+    <nav th:replace="~{layout/base :: navbar}"></nav>
+
+    <main class="container py-4">
+
+        <div class="mb-3">
+            <h1 class="h4 fw-bold mb-0">Departamentos</h1>
+            <p class="text-muted small mb-0">
+                Data de ubigeo (referencia geográfica del Perú) — solo lectura.
+            </p>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-fravadent table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th style="width:100px">Código</th>
+                            <th>Nombre</th>
+                            <th style="width:120px">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${departamentos}">
+                            <td th:text="${item.codigo}">1</td>
+                            <td th:text="${item.nombre}">Nombre departamento</td>
+                            <td>
+                                <span class="badge bg-success">Activo</span>
+                            </td>
+                        </tr>
+                        <tr th:if="${departamentos.isEmpty()}">
+                            <td colspan="3" class="text-center text-muted py-4">
+                                No hay registros todavía.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+    <th:block th:replace="~{layout/base :: scripts}"></th:block>
+
+</body>
+</html>

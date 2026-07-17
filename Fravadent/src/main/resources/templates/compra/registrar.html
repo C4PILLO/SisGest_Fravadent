@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head('Nueva compra')}"></head>
+
+<body>
+    <nav th:replace="~{layout/base :: navbar}"></nav>
+
+    <main class="container py-4">
+
+        <h1 class="h4 fw-bold mb-3">
+            <i class="bi bi-truck me-1"></i> Nueva compra
+        </h1>
+
+        <!--
+          PENDIENTE (backend):
+
+          1) Bug de esquema: DetalleCompraEntity tiene un campo "estado" que no
+             existe en la tabla detalle_compra real (compra sí tiene su columna
+             estado, esa parte está bien). El POST a /compra/transaccional va a
+             fallar al guardar el detalle hasta que se resuelva.
+
+          2) Combos: cargarCombos() en CompraController debe agregar "proveedors"
+             (ojo, así se llama, no "proveedores"), "usuarios", "productos".
+
+          Igual que en venta/registrar.html, uso campos de "código" numérico
+          visibles para Proveedor/Usuario/Producto — así se puede probar el flujo
+          completo hoy con IDs reales, sin esperar los combos.
+        -->
+
+        <div class="alert alert-warning small mb-3">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            El guardado del detalle va a fallar hasta que se resuelva el bug de "estado" en
+            <code>DetalleCompraEntity</code>. Ver comentario en el código fuente.
+        </div>
+
+        <form id="formCompra">
+
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-white fw-semibold">Datos de la compra</div>
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label for="fechaHora" class="form-label small fw-semibold">Fecha y hora</label>
+                            <input type="datetime-local" class="form-control" id="fechaHora" required>
+                        </div>
+
+                        <!-- Proveedor -->
+                        <div class="col-md-6">
+                            <label for="proveedorId" class="form-label small fw-semibold">
+                                Proveedor <span class="text-muted fw-normal">(código, temporal)</span>
+                            </label>
+                            <input type="number" class="form-control" id="proveedorId"
+                                   placeholder="Código de proveedor" required>
+                            <!--
+                            <select class="form-select" id="proveedorId" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="p : ${proveedors}" th:value="${p.codigo}" th:text="${p.razonSocial}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                        <!-- Usuario que registra -->
+                        <div class="col-md-6">
+                            <label for="usuarioId" class="form-label small fw-semibold">
+                                Usuario que registra <span class="text-muted fw-normal">(código, temporal)</span>
+                            </label>
+                            <input type="number" class="form-control" id="usuarioId"
+                                   placeholder="Código de usuario" required>
+                            <!--
+                            <select class="form-select" id="usuarioId" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="u : ${usuarios}" th:value="${u.codigo}"
+                                        th:text="${u.nombres + ' ' + u.apellidoPaterno}"></option>
+                            </select>
+                            -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-white fw-semibold d-flex justify-content-between align-items-center">
+                    <span>Detalle de productos comprados</span>
+                    <button type="button" class="btn btn-sm btn-login" onclick="agregarFila()">
+                        <i class="bi bi-plus-lg me-1"></i> Agregar producto
+                    </button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-fravadent align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th style="width:35%">
+                                        Producto <span class="text-muted fw-normal small">(código, temporal)</span>
+                                    </th>
+                                    <th style="width:15%">Cantidad</th>
+                                    <th style="width:20%">Precio unitario (S/)</th>
+                                    <th style="width:20%" class="text-end">Subtotal (S/)</th>
+                                    <th style="width:10%"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="detalleBody">
+                                <!-- Filas agregadas dinámicamente por JS -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-end fw-semibold">Total:</td>
+                                    <td class="text-end fw-bold" id="montoTotal">S/ 0.00</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <p class="text-muted small px-3 pb-3 mb-0" id="mensajeVacio">
+                        Todavía no agregas productos. Click en "Agregar producto".
+                    </p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 justify-content-end">
+                <a th:href="@{/compra/listar}" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-login">
+                    <i class="bi bi-check-lg me-1"></i> Registrar compra
+                </button>
+            </div>
+
+        </form>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+    <th:block th:replace="~{layout/base :: scripts}"></th:block>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const URL_TRANSACCIONAL = /*[[@{/compra/transaccional}]]*/ '/fravadent/compra/transaccional';
+        const URL_LISTAR = /*[[@{/compra/listar}]]*/ '/fravadent/compra/listar';
+        /*]]>*/
+
+        function actualizarMensajeVacio() {
+            const filas = document.querySelectorAll('#detalleBody tr').length;
+            document.getElementById('mensajeVacio').style.display = filas === 0 ? 'block' : 'none';
+        }
+
+        function agregarFila() {
+            const tbody = document.getElementById('detalleBody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="number" class="form-control form-control-sm" data-field="producto" placeholder="Código producto" required></td>
+                <td><input type="number" class="form-control form-control-sm" data-field="cantidad" min="1" value="1" required></td>
+                <td><input type="number" step="0.01" min="0" class="form-control form-control-sm" data-field="precio" required></td>
+                <td class="text-end"><span data-field="subtotal">0.00</span></td>
+                <td class="text-end">
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove(); calcularTotales();">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+            tr.querySelectorAll('input').forEach(inp => inp.addEventListener('input', calcularTotales));
+            actualizarMensajeVacio();
+        }
+
+        function calcularTotales() {
+            let total = 0;
+            document.querySelectorAll('#detalleBody tr').forEach(tr => {
+                const cantidad = parseFloat(tr.querySelector('[data-field="cantidad"]').value) || 0;
+                const precio = parseFloat(tr.querySelector('[data-field="precio"]').value) || 0;
+                const subtotal = cantidad * precio;
+                tr.querySelector('[data-field="subtotal"]').textContent = subtotal.toFixed(2);
+                total += subtotal;
+            });
+            document.getElementById('montoTotal').textContent = 'S/ ' + total.toFixed(2);
+            actualizarMensajeVacio();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const ahora = new Date();
+            ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset());
+            document.getElementById('fechaHora').value = ahora.toISOString().slice(0, 16);
+        });
+
+        document.getElementById('formCompra').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const filas = document.querySelectorAll('#detalleBody tr');
+            if (filas.length === 0) {
+                alert('Agrega al menos un producto al detalle.');
+                return;
+            }
+
+            const detalles = [];
+            let total = 0;
+            for (const tr of filas) {
+                const producto = parseInt(tr.querySelector('[data-field="producto"]').value);
+                const cantidad = parseInt(tr.querySelector('[data-field="cantidad"]').value);
+                const precio = parseFloat(tr.querySelector('[data-field="precio"]').value);
+                if (!producto || !cantidad || isNaN(precio)) {
+                    alert('Revisa que todas las filas del detalle tengan producto, cantidad y precio.');
+                    return;
+                }
+                const subtotal = cantidad * precio;
+                total += subtotal;
+                detalles.push({
+                    producto: { codigo: producto },
+                    cantidad: cantidad,
+                    precioUnitario: precio,
+                    subtotal: subtotal
+                });
+            }
+
+            const payload = {
+                compra: {
+                    fechaHora: document.getElementById('fechaHora').value,
+                    proveedor: { codigo: parseInt(document.getElementById('proveedorId').value) },
+                    usuario: { codigo: parseInt(document.getElementById('usuarioId').value) },
+                    montoTotal: total
+                },
+                detalles: detalles
+            };
+
+            try {
+                const resp = await fetch(URL_TRANSACCIONAL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (resp.ok) {
+                    window.location.href = URL_LISTAR;
+                } else {
+                    const err = await resp.text();
+                    alert('No se pudo registrar la compra:\n' + err);
+                }
+            } catch (err) {
+                alert('Error de conexión: ' + err);
+            }
+        });
+    </script>
+
+</body>
+</html>
