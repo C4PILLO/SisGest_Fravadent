@@ -13,4 +13,5 @@ import lombok.experimental.SuperBuilder;
 public class BaseDTO {
 	@Builder.Default
 	private Long codigo = 0L;
+	private String nombre; 
 }
