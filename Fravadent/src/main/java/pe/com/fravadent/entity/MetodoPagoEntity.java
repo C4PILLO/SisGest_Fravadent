@@ -21,11 +21,11 @@ import pe.com.fravadent.entity.base.BaseEntity;
 @Entity(name = "MetodoPagoEntity")
 @Table(name = "metodo_pago")
 public class MetodoPagoEntity extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_metodo_pago")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_metodo_pago")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
 }

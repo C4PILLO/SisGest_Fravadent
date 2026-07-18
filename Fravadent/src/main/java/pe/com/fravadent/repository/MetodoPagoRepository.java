@@ -8,6 +8,6 @@ import pe.com.fravadent.entity.MetodoPagoEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface MetodoPagoRepository extends GenericoRepository<MetodoPagoEntity, Long> {
-    @Query("select e from MetodoPagoEntity e where e.estado='A'")
-    List<MetodoPagoEntity> findAllCustom();
+	@Query("select e from MetodoPagoEntity e where e.estado='A'")
+	List<MetodoPagoEntity> findAllCustom();
 }

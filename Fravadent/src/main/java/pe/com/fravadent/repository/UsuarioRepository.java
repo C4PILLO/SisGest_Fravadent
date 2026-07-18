@@ -8,8 +8,8 @@ import pe.com.fravadent.entity.UsuarioEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface UsuarioRepository extends GenericoRepository<UsuarioEntity, Long> {
-    @Query("select e from UsuarioEntity e where e.estado='A'")
-    List<UsuarioEntity> findAllCustom();
-    
-    UsuarioEntity findByUsername(String username);
+	@Query("select e from UsuarioEntity e where e.estado='A'")
+	List<UsuarioEntity> findAllCustom();
+
+	UsuarioEntity findByUsername(String username);
 }

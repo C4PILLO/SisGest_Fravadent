@@ -23,29 +23,27 @@ import lombok.NoArgsConstructor;
 @Entity(name = "DetalleCompraEntity")
 @Table(name = "detalle_compra")
 public class DetalleCompraEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_detalle_compra")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_detalle_compra")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
+	@ManyToOne
+	@JoinColumn(name = "id_compra")
+	private CompraEntity compra;
 
+	@ManyToOne
+	@JoinColumn(name = "id_producto")
+	private ProductoEntity producto;
 
-    @ManyToOne
-    @JoinColumn(name = "id_compra")
-    private CompraEntity compra;
+	@Column(name = "cantidad")
+	private Integer cantidad;
 
-    @ManyToOne
-    @JoinColumn(name = "id_producto")
-    private ProductoEntity producto;
+	@Column(name = "precio_unitario")
+	private BigDecimal precioUnitario;
 
-    @Column(name = "cantidad")
-    private Integer cantidad;
-
-    @Column(name = "precio_unitario")
-    private BigDecimal precioUnitario;
-
-    @Column(name = "subtotal")
-    private BigDecimal subtotal;
+	@Column(name = "subtotal")
+	private BigDecimal subtotal;
 }

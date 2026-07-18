@@ -8,6 +8,6 @@ import pe.com.fravadent.entity.DistritoEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface DistritoRepository extends GenericoRepository<DistritoEntity, Long> {
-    @Query("select e from DistritoEntity e where e.estado='A'")
-    List<DistritoEntity> findAllCustom();
+	@Query("select e from DistritoEntity e where e.estado='A'")
+	List<DistritoEntity> findAllCustom();
 }

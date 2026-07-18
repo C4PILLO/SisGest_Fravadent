@@ -16,7 +16,8 @@ public class GenerarEncriptacion {
 	}
 
 	public static void main(String[] args) {
-		// Cambia el texto aqui para generar un hash BCrypt valido y copiarlo a tu base de datos
+		// Cambia el texto aqui para generar un hash BCrypt valido y copiarlo a tu base
+		// de datos
 		String clave = "admin123";
 		String claveEncriptada = GenerarEncriptacion.encriptar(clave);
 

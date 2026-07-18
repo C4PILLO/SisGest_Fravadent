@@ -13,7 +13,9 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class ProvinciaDTO extends BaseDTO {
-    private String estado;
+	private String estado;
+	
+	private String nombre;
 
-    private DepartamentoDTO departamento;
+	private DepartamentoDTO departamento;
 }

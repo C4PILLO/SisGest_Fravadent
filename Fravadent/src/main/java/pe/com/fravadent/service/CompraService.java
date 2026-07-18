@@ -5,5 +5,5 @@ import pe.com.fravadent.dto.wrapper.CompraWrapperDTO;
 import pe.com.fravadent.service.generic.GenericoService;
 
 public interface CompraService extends GenericoService<CompraDTO> {
-    CompraDTO registrarTransaccional(CompraWrapperDTO wrapper);
+	CompraDTO registrarTransaccional(CompraWrapperDTO wrapper);
 }

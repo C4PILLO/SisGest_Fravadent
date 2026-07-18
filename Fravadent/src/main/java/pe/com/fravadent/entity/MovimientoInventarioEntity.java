@@ -25,38 +25,38 @@ import lombok.NoArgsConstructor;
 @Entity(name = "MovimientoInventarioEntity")
 @Table(name = "movimiento_inventario")
 public class MovimientoInventarioEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_movimiento")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_movimiento")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_producto")
-    private ProductoEntity producto;
+	@ManyToOne
+	@JoinColumn(name = "id_producto")
+	private ProductoEntity producto;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tipo_movimiento")
-    private TipoMovimientoEntity tipoMovimiento;
+	@ManyToOne
+	@JoinColumn(name = "id_tipo_movimiento")
+	private TipoMovimientoEntity tipoMovimiento;
 
-    @Column(name = "cantidad")
-    private Integer cantidad;
+	@Column(name = "cantidad")
+	private Integer cantidad;
 
-    @Column(name = "fecha_hora")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime fechaHora;
+	@Column(name = "fecha_hora")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime fechaHora;
 
-    @Column(name = "referencia_tipo")
-    private String referenciaTipo;
+	@Column(name = "referencia_tipo")
+	private String referenciaTipo;
 
-    @Column(name = "referencia_id")
-    private Long referenciaId;
+	@Column(name = "referencia_id")
+	private Long referenciaId;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private UsuarioEntity usuario;
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	private UsuarioEntity usuario;
 
-    @Column(name = "observacion")
-    private String observacion;
+	@Column(name = "observacion")
+	private String observacion;
 }

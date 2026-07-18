@@ -8,6 +8,6 @@ import pe.com.fravadent.entity.EstadoDespachoEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface EstadoDespachoRepository extends GenericoRepository<EstadoDespachoEntity, Long> {
-    @Query("select e from EstadoDespachoEntity e where e.estado='A'")
-    List<EstadoDespachoEntity> findAllCustom();
+	@Query("select e from EstadoDespachoEntity e where e.estado='A'")
+	List<EstadoDespachoEntity> findAllCustom();
 }

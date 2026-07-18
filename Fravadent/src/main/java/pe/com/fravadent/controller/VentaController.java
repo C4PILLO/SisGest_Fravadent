@@ -22,87 +22,85 @@ import pe.com.fravadent.service.generic.GenericoService;
 @Controller
 @RequestMapping("/venta")
 public class VentaController extends GenericoController<VentaDTO> {
-    private final VentaService servicio;
-    private final ClienteService clienteService;
-    private final TipoComprobanteService tipoComprobanteService;
-    private final MetodoPagoService metodoPagoService;
-    private final EstadoVentaService estadoVentaService;
-    private final ProductoService productoService;
-    public VentaController(VentaService servicio,
-                           ClienteService clienteService,
-                           TipoComprobanteService tipoComprobanteService,
-                           MetodoPagoService metodoPagoService,
-                           EstadoVentaService estadoVentaService,
-                           ProductoService productoService) {
-        this.servicio = servicio;
-        this.clienteService = clienteService;
-        this.tipoComprobanteService = tipoComprobanteService;
-        this.metodoPagoService = metodoPagoService;
-        this.estadoVentaService = estadoVentaService;
-        this.productoService = productoService;
-    }
+	private final VentaService servicio;
+	private final ClienteService clienteService;
+	private final TipoComprobanteService tipoComprobanteService;
+	private final MetodoPagoService metodoPagoService;
+	private final EstadoVentaService estadoVentaService;
+	private final ProductoService productoService;
 
-    @Override
-    protected void cargarCombos(Model model) {
-        model.addAttribute("clientes", clienteService.findAllCustom());
-        model.addAttribute("tipocomprobantes", tipoComprobanteService.findAllCustom());
-        model.addAttribute("metodopagos", metodoPagoService.findAllCustom());
-        model.addAttribute("estadoventas", estadoVentaService.findAllCustom());
-        model.addAttribute("productos", productoService.findAllCustom());
-    }
+	public VentaController(VentaService servicio, ClienteService clienteService,
+			TipoComprobanteService tipoComprobanteService, MetodoPagoService metodoPagoService,
+			EstadoVentaService estadoVentaService, ProductoService productoService) {
+		this.servicio = servicio;
+		this.clienteService = clienteService;
+		this.tipoComprobanteService = tipoComprobanteService;
+		this.metodoPagoService = metodoPagoService;
+		this.estadoVentaService = estadoVentaService;
+		this.productoService = productoService;
+	}
 
-    @Override
-    protected GenericoService<VentaDTO> getServicio() {
-        return servicio;
-    }
+	@Override
+	protected void cargarCombos(Model model) {
+		model.addAttribute("clientes", clienteService.findAllCustom());
+		model.addAttribute("tipocomprobantes", tipoComprobanteService.findAllCustom());
+		model.addAttribute("metodopagos", metodoPagoService.findAllCustom());
+		model.addAttribute("estadoventas", estadoVentaService.findAllCustom());
+		model.addAttribute("productos", productoService.findAllCustom());
+	}
 
-    @Override
-    protected String getRuta() {
-        return "venta";
-    }
+	@Override
+	protected GenericoService<VentaDTO> getServicio() {
+		return servicio;
+	}
 
-    @Override
-    protected String getVistaListar() {
-        return "venta/listar";
-    }
+	@Override
+	protected String getRuta() {
+		return "venta";
+	}
 
-    @Override
-    protected String getVistaRegistrar() {
-        return "venta/registrar";
-    }
+	@Override
+	protected String getVistaListar() {
+		return "venta/listar";
+	}
 
-    @Override
-    protected String getVistaActualizar() {
-        return "venta/actualizar";
-    }
+	@Override
+	protected String getVistaRegistrar() {
+		return "venta/registrar";
+	}
 
-    @Override
-    protected String getVistaHabilitar() {
-        return "venta/habilitar";
-    }
+	@Override
+	protected String getVistaActualizar() {
+		return "venta/actualizar";
+	}
 
-    @Override
-    protected String getNombreLista() {
-        return "ventas";
-    }
+	@Override
+	protected String getVistaHabilitar() {
+		return "venta/habilitar";
+	}
 
-    @Override
-    protected String getNombreObjeto() {
-        return "venta";
-    }
+	@Override
+	protected String getNombreLista() {
+		return "ventas";
+	}
 
-    @Override
-    protected VentaDTO crearObjeto() {
-        return new VentaDTO();
-    }
+	@Override
+	protected String getNombreObjeto() {
+		return "venta";
+	}
 
-    @PostMapping("/transaccional")
-    @ResponseBody
-    public ResponseEntity<?> registrarTransaccional(@RequestBody VentaWrapperDTO wrapper) {
-        try {
-            return ResponseEntity.ok(servicio.registrarTransaccional(wrapper));
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
-    }
+	@Override
+	protected VentaDTO crearObjeto() {
+		return new VentaDTO();
+	}
+
+	@PostMapping("/transaccional")
+	@ResponseBody
+	public ResponseEntity<?> registrarTransaccional(@RequestBody VentaWrapperDTO wrapper) {
+		try {
+			return ResponseEntity.ok(servicio.registrarTransaccional(wrapper));
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(e.getMessage());
+		}
+	}
 }

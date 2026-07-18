@@ -7,14 +7,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ModelMapping {
-    @Bean
-    public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STANDARD)
-                .setSkipNullEnabled(true)
-                .setAmbiguityIgnored(true);
+	@Bean
+	public ModelMapper modelMapper() {
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD).setSkipNullEnabled(true)
+				.setAmbiguityIgnored(true);
 
-        return modelMapper;
-    }
+		return modelMapper;
+	}
 }

@@ -11,54 +11,54 @@ import pe.com.fravadent.service.generic.GenericoService;
 @Controller
 @RequestMapping("/categoria_producto")
 public class CategoriaController extends GenericoController<CategoriaDTO> {
-    private final CategoriaService servicio;
+	private final CategoriaService servicio;
 
-    public CategoriaController(CategoriaService servicio) {
-        this.servicio = servicio;
-    }
+	public CategoriaController(CategoriaService servicio) {
+		this.servicio = servicio;
+	}
 
-    @Override
-    protected GenericoService<CategoriaDTO> getServicio() {
-        return servicio;
-    }
+	@Override
+	protected GenericoService<CategoriaDTO> getServicio() {
+		return servicio;
+	}
 
-    @Override
-    protected String getRuta() {
-        return "categoria_producto";
-    }
+	@Override
+	protected String getRuta() {
+		return "categoria_producto";
+	}
 
-    @Override
-    protected String getVistaListar() {
-        return "categoria_producto/listar";
-    }
+	@Override
+	protected String getVistaListar() {
+		return "categoria_producto/listar";
+	}
 
-    @Override
-    protected String getVistaRegistrar() {
-        return "categoria_producto/registrar";
-    }
+	@Override
+	protected String getVistaRegistrar() {
+		return "categoria_producto/registrar";
+	}
 
-    @Override
-    protected String getVistaActualizar() {
-        return "categoria_producto/actualizar";
-    }
+	@Override
+	protected String getVistaActualizar() {
+		return "categoria_producto/actualizar";
+	}
 
-    @Override
-    protected String getVistaHabilitar() {
-        return "categoria_producto/habilitar";
-    }
+	@Override
+	protected String getVistaHabilitar() {
+		return "categoria_producto/habilitar";
+	}
 
-    @Override
-    protected String getNombreLista() {
-        return "categorias";
-    }
+	@Override
+	protected String getNombreLista() {
+		return "categorias";
+	}
 
-    @Override
-    protected String getNombreObjeto() {
-        return "categoria";
-    }
+	@Override
+	protected String getNombreObjeto() {
+		return "categoria";
+	}
 
-    @Override
-    protected CategoriaDTO crearObjeto() {
-        return new CategoriaDTO();
-    }
+	@Override
+	protected CategoriaDTO crearObjeto() {
+		return new CategoriaDTO();
+	}
 }

@@ -21,14 +21,13 @@ import pe.com.fravadent.entity.base.BaseEntity;
 @Entity(name = "UnidadMedidaEntity")
 @Table(name = "unidad_medida")
 public class UnidadMedidaEntity extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_unidad_medida")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_unidad_medida")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
-
-    @Column(name = "abreviatura")
-    private String abreviatura;
+	@Column(name = "abreviatura")
+	private String abreviatura;
 }

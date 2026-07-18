@@ -17,20 +17,20 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class MovimientoInventarioDTO extends BaseDTO {
-    private ProductoDTO producto;
+	private ProductoDTO producto;
 
-    private TipoMovimientoDTO tipoMovimiento;
+	private TipoMovimientoDTO tipoMovimiento;
 
-    private Integer cantidad;
+	private Integer cantidad;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime fechaHora;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime fechaHora;
 
-    private String referenciaTipo;
+	private String referenciaTipo;
 
-    private Long referenciaId;
+	private Long referenciaId;
 
-    private UsuarioDTO usuario;
+	private UsuarioDTO usuario;
 
-    private String observacion;
+	private String observacion;
 }

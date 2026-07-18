@@ -11,54 +11,54 @@ import pe.com.fravadent.service.generic.GenericoService;
 @Controller
 @RequestMapping("/tipo_documento")
 public class TipoDocumentoController extends GenericoController<TipoDocumentoDTO> {
-    private final TipoDocumentoService servicio;
+	private final TipoDocumentoService servicio;
 
-    public TipoDocumentoController(TipoDocumentoService servicio) {
-        this.servicio = servicio;
-    }
+	public TipoDocumentoController(TipoDocumentoService servicio) {
+		this.servicio = servicio;
+	}
 
-    @Override
-    protected GenericoService<TipoDocumentoDTO> getServicio() {
-        return servicio;
-    }
+	@Override
+	protected GenericoService<TipoDocumentoDTO> getServicio() {
+		return servicio;
+	}
 
-    @Override
-    protected String getRuta() {
-        return "tipo_documento";
-    }
+	@Override
+	protected String getRuta() {
+		return "tipo_documento";
+	}
 
-    @Override
-    protected String getVistaListar() {
-        return "tipo_documento/listar";
-    }
+	@Override
+	protected String getVistaListar() {
+		return "tipo_documento/listar";
+	}
 
-    @Override
-    protected String getVistaRegistrar() {
-        return "tipo_documento/registrar";
-    }
+	@Override
+	protected String getVistaRegistrar() {
+		return "tipo_documento/registrar";
+	}
 
-    @Override
-    protected String getVistaActualizar() {
-        return "tipo_documento/actualizar";
-    }
+	@Override
+	protected String getVistaActualizar() {
+		return "tipo_documento/actualizar";
+	}
 
-    @Override
-    protected String getVistaHabilitar() {
-        return "tipo_documento/habilitar";
-    }
+	@Override
+	protected String getVistaHabilitar() {
+		return "tipo_documento/habilitar";
+	}
 
-    @Override
-    protected String getNombreLista() {
-        return "tipodocumentos";
-    }
+	@Override
+	protected String getNombreLista() {
+		return "tipodocumentos";
+	}
 
-    @Override
-    protected String getNombreObjeto() {
-        return "tipodocumento";
-    }
+	@Override
+	protected String getNombreObjeto() {
+		return "tipodocumento";
+	}
 
-    @Override
-    protected TipoDocumentoDTO crearObjeto() {
-        return new TipoDocumentoDTO();
-    }
+	@Override
+	protected TipoDocumentoDTO crearObjeto() {
+		return new TipoDocumentoDTO();
+	}
 }

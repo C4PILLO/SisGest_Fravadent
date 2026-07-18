@@ -17,34 +17,34 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class UsuarioDTO extends BaseDTO {
-    private String estado;
+	private String estado;
 
-    private String username;
+	private String username;
 
-    private String password_hash;
+	private String password_hash;
 
-    private RolDTO rol;
+	private RolDTO rol;
 
-    private TipoDocumentoDTO tipoDocumento;
+	private TipoDocumentoDTO tipoDocumento;
 
-    private String numeroDocumento;
+	private String numeroDocumento;
 
-    private String nombres;
+	private String nombres;
 
-    private String apellidoPaterno;
+	private String apellidoPaterno;
 
-    private String apellidoMaterno;
+	private String apellidoMaterno;
 
-    private SexoDTO sexo;
+	private SexoDTO sexo;
 
-    private String telefono;
+	private String telefono;
 
-    private String email;
+	private String email;
 
-    private String direccion;
+	private String direccion;
 
-    private DistritoDTO distrito;
+	private DistritoDTO distrito;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaRegistro;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate fechaRegistro;
 }

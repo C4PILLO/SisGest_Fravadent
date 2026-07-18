@@ -21,11 +21,11 @@ import pe.com.fravadent.entity.base.BaseEntity;
 @Entity(name = "TipoComprobanteEntity")
 @Table(name = "tipo_comprobante")
 public class TipoComprobanteEntity extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_tipo_comprobante")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_tipo_comprobante")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
 }

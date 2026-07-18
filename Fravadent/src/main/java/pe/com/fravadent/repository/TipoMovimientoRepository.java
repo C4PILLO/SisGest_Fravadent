@@ -8,6 +8,6 @@ import pe.com.fravadent.entity.TipoMovimientoEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface TipoMovimientoRepository extends GenericoRepository<TipoMovimientoEntity, Long> {
-    @Query("select e from TipoMovimientoEntity e where e.estado='A'")
-    List<TipoMovimientoEntity> findAllCustom();
+	@Query("select e from TipoMovimientoEntity e where e.estado='A'")
+	List<TipoMovimientoEntity> findAllCustom();
 }

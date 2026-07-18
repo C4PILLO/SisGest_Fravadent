@@ -11,54 +11,54 @@ import pe.com.fravadent.service.generic.GenericoService;
 @Controller
 @RequestMapping("/distrito")
 public class DistritoController extends GenericoController<DistritoDTO> {
-    private final DistritoService servicio;
+	private final DistritoService servicio;
 
-    public DistritoController(DistritoService servicio) {
-        this.servicio = servicio;
-    }
+	public DistritoController(DistritoService servicio) {
+		this.servicio = servicio;
+	}
 
-    @Override
-    protected GenericoService<DistritoDTO> getServicio() {
-        return servicio;
-    }
+	@Override
+	protected GenericoService<DistritoDTO> getServicio() {
+		return servicio;
+	}
 
-    @Override
-    protected String getRuta() {
-        return "distrito";
-    }
+	@Override
+	protected String getRuta() {
+		return "distrito";
+	}
 
-    @Override
-    protected String getVistaListar() {
-        return "distrito/listar";
-    }
+	@Override
+	protected String getVistaListar() {
+		return "distrito/listar";
+	}
 
-    @Override
-    protected String getVistaRegistrar() {
-        return "distrito/registrar";
-    }
+	@Override
+	protected String getVistaRegistrar() {
+		return "distrito/registrar";
+	}
 
-    @Override
-    protected String getVistaActualizar() {
-        return "distrito/actualizar";
-    }
+	@Override
+	protected String getVistaActualizar() {
+		return "distrito/actualizar";
+	}
 
-    @Override
-    protected String getVistaHabilitar() {
-        return "distrito/habilitar";
-    }
+	@Override
+	protected String getVistaHabilitar() {
+		return "distrito/habilitar";
+	}
 
-    @Override
-    protected String getNombreLista() {
-        return "distritos";
-    }
+	@Override
+	protected String getNombreLista() {
+		return "distritos";
+	}
 
-    @Override
-    protected String getNombreObjeto() {
-        return "distrito";
-    }
+	@Override
+	protected String getNombreObjeto() {
+		return "distrito";
+	}
 
-    @Override
-    protected DistritoDTO crearObjeto() {
-        return new DistritoDTO();
-    }
+	@Override
+	protected DistritoDTO crearObjeto() {
+		return new DistritoDTO();
+	}
 }

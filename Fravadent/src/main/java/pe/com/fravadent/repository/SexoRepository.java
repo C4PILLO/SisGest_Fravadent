@@ -8,6 +8,6 @@ import pe.com.fravadent.entity.SexoEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface SexoRepository extends GenericoRepository<SexoEntity, Long> {
-    @Query("select e from SexoEntity e where e.estado='A'")
-    List<SexoEntity> findAllCustom();
+	@Query("select e from SexoEntity e where e.estado='A'")
+	List<SexoEntity> findAllCustom();
 }

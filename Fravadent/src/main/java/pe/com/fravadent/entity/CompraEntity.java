@@ -26,28 +26,28 @@ import lombok.NoArgsConstructor;
 @Entity(name = "CompraEntity")
 @Table(name = "compra")
 public class CompraEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_compra")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_compra")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
-    @Column(name="estado", length = 1, nullable = false)
-    private String estado;
+	@Column(name = "estado", length = 1, nullable = false)
+	private String estado;
 
-    @ManyToOne
-    @JoinColumn(name = "id_proveedor")
-    private ProveedorEntity proveedor;
+	@ManyToOne
+	@JoinColumn(name = "id_proveedor")
+	private ProveedorEntity proveedor;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private UsuarioEntity usuario;
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	private UsuarioEntity usuario;
 
-    @Column(name = "fecha_hora")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime fechaHora;
+	@Column(name = "fecha_hora")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime fechaHora;
 
-    @Column(name = "monto_total")
-    private BigDecimal montoTotal;
+	@Column(name = "monto_total")
+	private BigDecimal montoTotal;
 }

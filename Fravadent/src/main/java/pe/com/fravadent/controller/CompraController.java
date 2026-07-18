@@ -12,83 +12,82 @@ import pe.com.fravadent.controller.generic.GenericoController;
 import pe.com.fravadent.dto.CompraDTO;
 import pe.com.fravadent.dto.wrapper.CompraWrapperDTO;
 import pe.com.fravadent.service.CompraService;
-import pe.com.fravadent.service.ProveedorService;
 import pe.com.fravadent.service.ProductoService;
+import pe.com.fravadent.service.ProveedorService;
 import pe.com.fravadent.service.generic.GenericoService;
 
 @Controller
 @RequestMapping("/compra")
 public class CompraController extends GenericoController<CompraDTO> {
-    private final CompraService servicio;
-    private final ProveedorService proveedorService;
-    private final ProductoService productoService;
+	private final CompraService servicio;
+	private final ProveedorService proveedorService;
+	private final ProductoService productoService;
 
-    public CompraController(CompraService servicio, 
-                            ProveedorService proveedorService,
-                            ProductoService productoService) {
-        this.servicio = servicio;
-        this.proveedorService = proveedorService;
-        this.productoService = productoService;
-    }
+	public CompraController(CompraService servicio, ProveedorService proveedorService,
+			ProductoService productoService) {
+		this.servicio = servicio;
+		this.proveedorService = proveedorService;
+		this.productoService = productoService;
+	}
 
-    @Override
-    protected void cargarCombos(Model modelo) {
-        modelo.addAttribute("proveedors", proveedorService.findAllCustom());
-        modelo.addAttribute("productos", productoService.findAllCustom());
-    }
+	@Override
+	protected void cargarCombos(Model modelo) {
+		modelo.addAttribute("proveedors", proveedorService.findAllCustom());
+		modelo.addAttribute("productos", productoService.findAllCustom());
+	}
 
-    @Override
-    protected GenericoService<CompraDTO> getServicio() {
-        return servicio;
-    }
+	@Override
+	protected GenericoService<CompraDTO> getServicio() {
+		return servicio;
+	}
 
-    @Override
-    protected String getRuta() {
-        return "compra";
-    }
+	@Override
+	protected String getRuta() {
+		return "compra";
+	}
 
-    @Override
-    protected String getVistaListar() {
-        return "compra/listar";
-    }
+	@Override
+	protected String getVistaListar() {
+		return "compra/listar";
+	}
 
-    @Override
-    protected String getVistaRegistrar() {
-        return "compra/registrar";
-    }
+	@Override
+	protected String getVistaRegistrar() {
+		return "compra/registrar";
+	}
 
-    @Override
-    protected String getVistaActualizar() {
-        return "compra/actualizar";
-    }
+	@Override
+	protected String getVistaActualizar() {
+		return "compra/actualizar";
+	}
 
-    @Override
-    protected String getVistaHabilitar() {
-        return "compra/habilitar";
-    }
+	@Override
+	protected String getVistaHabilitar() {
+		return "compra/habilitar";
+	}
 
-    @Override
-    protected String getNombreLista() {
-        return "compras";
-    }
+	@Override
+	protected String getNombreLista() {
+		return "compras";
+	}
 
-    @Override
-    protected String getNombreObjeto() {
-        return "compra";
-    }
+	@Override
+	protected String getNombreObjeto() {
+		return "compra";
+	}
 
-    @Override
-    protected CompraDTO crearObjeto() {
-        return new CompraDTO();
-    }
+	@Override
+	protected CompraDTO crearObjeto() {
+		return new CompraDTO();
+	}
 
-    @PostMapping("/transaccional")
-    @ResponseBody
-    public ResponseEntity<?> registrarTransaccional(@RequestBody CompraWrapperDTO wrapper) {
-        try {
-            return ResponseEntity.ok(servicio.registrarTransaccional(wrapper));
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
-    }
+	@PostMapping("/transaccional")
+	@ResponseBody
+	public ResponseEntity<?> registrarTransaccional(@RequestBody CompraWrapperDTO wrapper) {
+		try {
+			return ResponseEntity.ok(servicio.registrarTransaccional(wrapper));
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(e.getMessage());
+		}
+	}
 }

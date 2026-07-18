@@ -8,6 +8,6 @@ import pe.com.fravadent.entity.TipoComprobanteEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface TipoComprobanteRepository extends GenericoRepository<TipoComprobanteEntity, Long> {
-    @Query("select e from TipoComprobanteEntity e where e.estado='A'")
-    List<TipoComprobanteEntity> findAllCustom();
+	@Query("select e from TipoComprobanteEntity e where e.estado='A'")
+	List<TipoComprobanteEntity> findAllCustom();
 }

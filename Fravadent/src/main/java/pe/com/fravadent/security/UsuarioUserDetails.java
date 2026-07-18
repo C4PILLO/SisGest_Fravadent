@@ -1,14 +1,16 @@
 package pe.com.fravadent.security;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import pe.com.fravadent.entity.UsuarioEntity;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import pe.com.fravadent.entity.UsuarioEntity;
+
 public class UsuarioUserDetails implements UserDetails {
-	
+
 	private static final long serialVersionUID = 1L;
 	private final UsuarioEntity usuario;
 	private final String rolNombre;
@@ -52,10 +54,14 @@ public class UsuarioUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return "A".equals(usuario.getEstado());
 	}
-	
+
 	public String getNombreCompleto() {
 		String paterno = usuario.getApellidoPaterno() != null ? usuario.getApellidoPaterno() : "";
 		String materno = usuario.getApellidoMaterno() != null ? usuario.getApellidoMaterno() : "";
 		return usuario.getNombres() + " " + paterno + " " + materno;
+	}
+
+	public UsuarioEntity getUsuario() {
+		return this.usuario;
 	}
 }

@@ -15,9 +15,9 @@ import lombok.experimental.SuperBuilder;
 @Data
 @Builder
 public class BaseEntity {
-    @Column(name = "nombre", length = 80, nullable = false)
-    private String nombre;
+	@Column(name = "nombre", length = 80, nullable = false)
+	private String nombre;
 
-    @Column(name="estado", length = 1, nullable = false)
-    private String estado;
+	@Column(name = "estado", length = 1, nullable = false)
+	private String estado;
 }

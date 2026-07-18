@@ -11,54 +11,54 @@ import pe.com.fravadent.service.generic.GenericoService;
 @Controller
 @RequestMapping("/provincia")
 public class ProvinciaController extends GenericoController<ProvinciaDTO> {
-    private final ProvinciaService servicio;
+	private final ProvinciaService servicio;
 
-    public ProvinciaController(ProvinciaService servicio) {
-        this.servicio = servicio;
-    }
+	public ProvinciaController(ProvinciaService servicio) {
+		this.servicio = servicio;
+	}
 
-    @Override
-    protected GenericoService<ProvinciaDTO> getServicio() {
-        return servicio;
-    }
+	@Override
+	protected GenericoService<ProvinciaDTO> getServicio() {
+		return servicio;
+	}
 
-    @Override
-    protected String getRuta() {
-        return "provincia";
-    }
+	@Override
+	protected String getRuta() {
+		return "provincia";
+	}
 
-    @Override
-    protected String getVistaListar() {
-        return "provincia/listar";
-    }
+	@Override
+	protected String getVistaListar() {
+		return "provincia/listar";
+	}
 
-    @Override
-    protected String getVistaRegistrar() {
-        return "provincia/registrar";
-    }
+	@Override
+	protected String getVistaRegistrar() {
+		return "provincia/registrar";
+	}
 
-    @Override
-    protected String getVistaActualizar() {
-        return "provincia/actualizar";
-    }
+	@Override
+	protected String getVistaActualizar() {
+		return "provincia/actualizar";
+	}
 
-    @Override
-    protected String getVistaHabilitar() {
-        return "provincia/habilitar";
-    }
+	@Override
+	protected String getVistaHabilitar() {
+		return "provincia/habilitar";
+	}
 
-    @Override
-    protected String getNombreLista() {
-        return "provincias";
-    }
+	@Override
+	protected String getNombreLista() {
+		return "provincias";
+	}
 
-    @Override
-    protected String getNombreObjeto() {
-        return "provincia";
-    }
+	@Override
+	protected String getNombreObjeto() {
+		return "provincia";
+	}
 
-    @Override
-    protected ProvinciaDTO crearObjeto() {
-        return new ProvinciaDTO();
-    }
+	@Override
+	protected ProvinciaDTO crearObjeto() {
+		return new ProvinciaDTO();
+	}
 }

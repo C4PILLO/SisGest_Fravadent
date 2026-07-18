@@ -13,7 +13,9 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class UnidadMedidaDTO extends BaseDTO {
-    private String estado;
+	private String estado;
+	
+	private String nombre;
 
-    private String abreviatura;
+	private String abreviatura;
 }

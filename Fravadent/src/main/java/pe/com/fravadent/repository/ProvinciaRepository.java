@@ -8,6 +8,6 @@ import pe.com.fravadent.entity.ProvinciaEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface ProvinciaRepository extends GenericoRepository<ProvinciaEntity, Long> {
-    @Query("select e from ProvinciaEntity e where e.estado='A'")
-    List<ProvinciaEntity> findAllCustom();
+	@Query("select e from ProvinciaEntity e where e.estado='A'")
+	List<ProvinciaEntity> findAllCustom();
 }

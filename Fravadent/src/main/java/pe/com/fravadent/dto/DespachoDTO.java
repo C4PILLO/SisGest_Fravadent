@@ -17,23 +17,23 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class DespachoDTO extends BaseDTO {
-    private VentaDTO venta;
+	private VentaDTO venta;
 
-    private UsuarioDTO usuario;
+	private UsuarioDTO usuario;
 
-    private TipoDespachoDTO tipoDespacho;
+	private TipoDespachoDTO tipoDespacho;
 
-    private EstadoDespachoDTO estadoDespacho;
+	private EstadoDespachoDTO estadoDespacho;
 
-    private String direccionEntrega;
+	private String direccionEntrega;
 
-    private DistritoDTO distrito;
+	private DistritoDTO distrito;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime fechaProgramada;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime fechaProgramada;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime fechaEntregaReal;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime fechaEntregaReal;
 
-    private String observaciones;
+	private String observaciones;
 }

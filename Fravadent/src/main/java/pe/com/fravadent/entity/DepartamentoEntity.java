@@ -21,11 +21,11 @@ import pe.com.fravadent.entity.base.BaseEntity;
 @Entity(name = "DepartamentoEntity")
 @Table(name = "departamento")
 public class DepartamentoEntity extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_departamento")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_departamento")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
 }

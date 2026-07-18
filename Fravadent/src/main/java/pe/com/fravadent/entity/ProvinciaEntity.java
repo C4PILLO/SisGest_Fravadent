@@ -23,15 +23,14 @@ import pe.com.fravadent.entity.base.BaseEntity;
 @Entity(name = "ProvinciaEntity")
 @Table(name = "provincia")
 public class ProvinciaEntity extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_provincia")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_provincia")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
-
-    @ManyToOne
-    @JoinColumn(name = "id_departamento")
-    private DepartamentoEntity departamento;
+	@ManyToOne
+	@JoinColumn(name = "id_departamento")
+	private DepartamentoEntity departamento;
 }

@@ -11,54 +11,54 @@ import pe.com.fravadent.service.generic.GenericoService;
 @Controller
 @RequestMapping("/tipo_movimiento")
 public class TipoMovimientoController extends GenericoController<TipoMovimientoDTO> {
-    private final TipoMovimientoService servicio;
+	private final TipoMovimientoService servicio;
 
-    public TipoMovimientoController(TipoMovimientoService servicio) {
-        this.servicio = servicio;
-    }
+	public TipoMovimientoController(TipoMovimientoService servicio) {
+		this.servicio = servicio;
+	}
 
-    @Override
-    protected GenericoService<TipoMovimientoDTO> getServicio() {
-        return servicio;
-    }
+	@Override
+	protected GenericoService<TipoMovimientoDTO> getServicio() {
+		return servicio;
+	}
 
-    @Override
-    protected String getRuta() {
-        return "tipo_movimiento";
-    }
+	@Override
+	protected String getRuta() {
+		return "tipo_movimiento";
+	}
 
-    @Override
-    protected String getVistaListar() {
-        return "tipo_movimiento/listar";
-    }
+	@Override
+	protected String getVistaListar() {
+		return "tipo_movimiento/listar";
+	}
 
-    @Override
-    protected String getVistaRegistrar() {
-        return "tipo_movimiento/registrar";
-    }
+	@Override
+	protected String getVistaRegistrar() {
+		return "tipo_movimiento/registrar";
+	}
 
-    @Override
-    protected String getVistaActualizar() {
-        return "tipo_movimiento/actualizar";
-    }
+	@Override
+	protected String getVistaActualizar() {
+		return "tipo_movimiento/actualizar";
+	}
 
-    @Override
-    protected String getVistaHabilitar() {
-        return "tipo_movimiento/habilitar";
-    }
+	@Override
+	protected String getVistaHabilitar() {
+		return "tipo_movimiento/habilitar";
+	}
 
-    @Override
-    protected String getNombreLista() {
-        return "tipomovimientos";
-    }
+	@Override
+	protected String getNombreLista() {
+		return "tipomovimientos";
+	}
 
-    @Override
-    protected String getNombreObjeto() {
-        return "tipomovimiento";
-    }
+	@Override
+	protected String getNombreObjeto() {
+		return "tipomovimiento";
+	}
 
-    @Override
-    protected TipoMovimientoDTO crearObjeto() {
-        return new TipoMovimientoDTO();
-    }
+	@Override
+	protected TipoMovimientoDTO crearObjeto() {
+		return new TipoMovimientoDTO();
+	}
 }

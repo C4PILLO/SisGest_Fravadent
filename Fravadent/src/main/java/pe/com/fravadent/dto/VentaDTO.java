@@ -18,20 +18,20 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class VentaDTO extends BaseDTO {
-    private String nroComprobante;
+	private String nroComprobante;
 
-    private TipoComprobanteDTO tipoComprobante;
+	private TipoComprobanteDTO tipoComprobante;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime fechaHora;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime fechaHora;
 
-    private ClienteDTO cliente;
+	private ClienteDTO cliente;
 
-    private UsuarioDTO usuario;
+	private UsuarioDTO usuario;
 
-    private MetodoPagoDTO metodoPago;
+	private MetodoPagoDTO metodoPago;
 
-    private EstadoVentaDTO estadoVenta;
+	private EstadoVentaDTO estadoVenta;
 
-    private BigDecimal montoTotal;
+	private BigDecimal montoTotal;
 }

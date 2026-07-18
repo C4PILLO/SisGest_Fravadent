@@ -25,46 +25,44 @@ import lombok.NoArgsConstructor;
 @Entity(name = "DespachoEntity")
 @Table(name = "despacho")
 public class DespachoEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_despacho")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_despacho")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
+	@ManyToOne
+	@JoinColumn(name = "id_venta")
+	private VentaEntity venta;
 
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	private UsuarioEntity usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "id_venta")
-    private VentaEntity venta;
+	@ManyToOne
+	@JoinColumn(name = "id_tipo_despacho")
+	private TipoDespachoEntity tipoDespacho;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private UsuarioEntity usuario;
+	@ManyToOne
+	@JoinColumn(name = "id_estado_despacho")
+	private EstadoDespachoEntity estadoDespacho;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tipo_despacho")
-    private TipoDespachoEntity tipoDespacho;
+	@Column(name = "direccion_entrega")
+	private String direccionEntrega;
 
-    @ManyToOne
-    @JoinColumn(name = "id_estado_despacho")
-    private EstadoDespachoEntity estadoDespacho;
+	@ManyToOne
+	@JoinColumn(name = "id_distrito")
+	private DistritoEntity distrito;
 
-    @Column(name = "direccion_entrega")
-    private String direccionEntrega;
+	@Column(name = "fecha_programada")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime fechaProgramada;
 
-    @ManyToOne
-    @JoinColumn(name = "id_distrito")
-    private DistritoEntity distrito;
+	@Column(name = "fecha_entrega_real")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime fechaEntregaReal;
 
-    @Column(name = "fecha_programada")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime fechaProgramada;
-
-    @Column(name = "fecha_entrega_real")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime fechaEntregaReal;
-
-    @Column(name = "observaciones")
-    private String observaciones;
+	@Column(name = "observaciones")
+	private String observaciones;
 }

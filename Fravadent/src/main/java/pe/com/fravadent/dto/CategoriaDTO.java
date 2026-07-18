@@ -13,5 +13,7 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class CategoriaDTO extends BaseDTO {
-    private String estado;
+	private String estado;
+	
+	private String nombre;
 }

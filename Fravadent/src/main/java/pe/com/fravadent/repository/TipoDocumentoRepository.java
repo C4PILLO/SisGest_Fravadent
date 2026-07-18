@@ -8,6 +8,6 @@ import pe.com.fravadent.entity.TipoDocumentoEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface TipoDocumentoRepository extends GenericoRepository<TipoDocumentoEntity, Long> {
-    @Query("select e from TipoDocumentoEntity e where e.estado='A'")
-    List<TipoDocumentoEntity> findAllCustom();
+	@Query("select e from TipoDocumentoEntity e where e.estado='A'")
+	List<TipoDocumentoEntity> findAllCustom();
 }

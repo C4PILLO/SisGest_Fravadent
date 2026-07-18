@@ -11,5 +11,4 @@ import lombok.experimental.SuperBuilder;
 @Data
 public class BaseDTO {
 	private Long codigo;
-	private String nombre; 
 }

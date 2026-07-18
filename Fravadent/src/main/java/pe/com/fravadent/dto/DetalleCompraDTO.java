@@ -16,13 +16,13 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @SuperBuilder
 public class DetalleCompraDTO extends BaseDTO {
 
-    private CompraDTO compra;
+	private CompraDTO compra;
 
-    private ProductoDTO producto;
+	private ProductoDTO producto;
 
-    private Integer cantidad;
+	private Integer cantidad;
 
-    private BigDecimal precioUnitario;
+	private BigDecimal precioUnitario;
 
-    private BigDecimal subtotal;
+	private BigDecimal subtotal;
 }

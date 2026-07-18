@@ -25,60 +25,60 @@ import lombok.NoArgsConstructor;
 @Entity(name = "UsuarioEntity")
 @Table(name = "usuario")
 public class UsuarioEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_usuario")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+	@Id
+	@Column(name = "id_usuario")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
-    @Column(name="estado", length = 1, nullable = false)
-    private String estado;
-    
-    @Column(name = "username", length = 50, nullable = false, unique = true)
-    private String username;
-    
-    @Column(name = "password_hash", length = 255, nullable = false)
-    private String password_hash;
-    
-    @ManyToOne
-    @JoinColumn(name = "id_rol", nullable = false)
-    private RolEntity rol;
+	@Column(name = "estado", length = 1, nullable = false)
+	private String estado;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tipo_documento")
-    private TipoDocumentoEntity tipoDocumento;
+	@Column(name = "username", length = 50, nullable = false, unique = true)
+	private String username;
 
-    @Column(name = "numero_documento")
-    private String numeroDocumento;
+	@Column(name = "password_hash", length = 255, nullable = false)
+	private String password_hash;
 
-    @Column(name = "nombres")
-    private String nombres;
+	@ManyToOne
+	@JoinColumn(name = "id_rol", nullable = false)
+	private RolEntity rol;
 
-    @Column(name = "apellido_paterno")
-    private String apellidoPaterno;
+	@ManyToOne
+	@JoinColumn(name = "id_tipo_documento")
+	private TipoDocumentoEntity tipoDocumento;
 
-    @Column(name = "apellido_materno")
-    private String apellidoMaterno;
+	@Column(name = "numero_documento")
+	private String numeroDocumento;
 
-    @ManyToOne
-    @JoinColumn(name = "id_sexo")
-    private SexoEntity sexo;
+	@Column(name = "nombres")
+	private String nombres;
 
-    @Column(name = "telefono")
-    private String telefono;
+	@Column(name = "apellido_paterno")
+	private String apellidoPaterno;
 
-    @Column(name = "email")
-    private String email;
+	@Column(name = "apellido_materno")
+	private String apellidoMaterno;
 
-    @Column(name = "direccion")
-    private String direccion;
+	@ManyToOne
+	@JoinColumn(name = "id_sexo")
+	private SexoEntity sexo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_distrito")
-    private DistritoEntity distrito;
+	@Column(name = "telefono")
+	private String telefono;
 
-    @Column(name = "fecha_registro")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaRegistro;
+	@Column(name = "email")
+	private String email;
+
+	@Column(name = "direccion")
+	private String direccion;
+
+	@ManyToOne
+	@JoinColumn(name = "id_distrito")
+	private DistritoEntity distrito;
+
+	@Column(name = "fecha_registro")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate fechaRegistro;
 }

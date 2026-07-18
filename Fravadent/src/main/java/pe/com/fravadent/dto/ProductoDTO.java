@@ -15,23 +15,23 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class ProductoDTO extends BaseDTO {
-    private String estado;
+	private String estado;
 
-    private String codigoSku;
+	private String codigoSku;
 
-    private String nombreDescripcion;
+	private String nombreDescripcion;
 
-    private CategoriaDTO categoria;
+	private CategoriaDTO categoria;
 
-    private MarcaDTO marca;
+	private MarcaDTO marca;
 
-    private UnidadMedidaDTO unidadMedida;
+	private UnidadMedidaDTO unidadMedida;
 
-    private BigDecimal precioCompra;
+	private BigDecimal precioCompra;
 
-    private BigDecimal precioVenta;
+	private BigDecimal precioVenta;
 
-    private Integer stockActual;
+	private Integer stockActual;
 
-    private Integer stockMinimo;
+	private Integer stockMinimo;
 }
