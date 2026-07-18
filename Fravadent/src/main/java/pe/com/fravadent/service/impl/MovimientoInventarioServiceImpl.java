@@ -4,14 +4,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.com.fravadent.dto.MovimientoInventarioDTO;
 import pe.com.fravadent.entity.MovimientoInventarioEntity;
 import pe.com.fravadent.entity.ProductoEntity;
+import pe.com.fravadent.entity.UsuarioEntity;
 import pe.com.fravadent.repository.MovimientoInventarioRepository;
 import pe.com.fravadent.repository.ProductoRepository;
+import pe.com.fravadent.repository.UsuarioRepository;
 import pe.com.fravadent.service.MovimientoInventarioService;
 
 @Service
@@ -19,11 +22,13 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
     private final ModelMapper modelMapper;
     private final MovimientoInventarioRepository repositorio;
     private final ProductoRepository productoRepo;
+    private final UsuarioRepository usuarioRepo;
 
-    public MovimientoInventarioServiceImpl(MovimientoInventarioRepository repositorio, ModelMapper modelMapper, ProductoRepository productoRepo) {
+    public MovimientoInventarioServiceImpl(MovimientoInventarioRepository repositorio, ModelMapper modelMapper, ProductoRepository productoRepo, UsuarioRepository usuarioRepo) {
         this.repositorio = repositorio;
         this.modelMapper = modelMapper;
         this.productoRepo = productoRepo;
+        this.usuarioRepo = usuarioRepo;
     }
 
     @Override
@@ -47,7 +52,14 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
         if (obj.getFechaHora() == null) {
             obj.setFechaHora(LocalDateTime.now());
         }
+        
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UsuarioEntity usuarioLogueado = usuarioRepo.findByUsername(username);
+        
         MovimientoInventarioEntity entity = modelMapper.map(obj, MovimientoInventarioEntity.class);
+        if (usuarioLogueado != null) {
+            entity.setUsuario(usuarioLogueado);
+        }
         entity = repositorio.save(entity);
         
         if (entity.getProducto() != null && entity.getTipoMovimiento() != null && entity.getCantidad() != null) {

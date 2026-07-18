@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +17,11 @@ import pe.com.fravadent.entity.DetalleCompraEntity;
 import pe.com.fravadent.entity.ProductoEntity;
 import pe.com.fravadent.entity.MovimientoInventarioEntity;
 import pe.com.fravadent.entity.TipoMovimientoEntity;
-
+import pe.com.fravadent.entity.UsuarioEntity;
 import pe.com.fravadent.repository.CompraRepository;
 import pe.com.fravadent.repository.DetalleCompraRepository;
 import pe.com.fravadent.repository.ProductoRepository;
+import pe.com.fravadent.repository.UsuarioRepository;
 import pe.com.fravadent.repository.MovimientoInventarioRepository;
 import pe.com.fravadent.service.CompraService;
 
@@ -31,16 +33,19 @@ public class CompraServiceImpl implements CompraService {
     private final DetalleCompraRepository detalleRepo;
     private final ProductoRepository productoRepo;
     private final MovimientoInventarioRepository movRepo;
+    private final UsuarioRepository usuarioRepo;
 
     public CompraServiceImpl(CompraRepository repositorio, ModelMapper modelMapper, 
                              DetalleCompraRepository detalleRepo, 
                              ProductoRepository productoRepo, 
-                             MovimientoInventarioRepository movRepo) {
+                             MovimientoInventarioRepository movRepo,
+                             UsuarioRepository usuarioRepo) {
         this.repositorio = repositorio;
         this.modelMapper = modelMapper;
         this.detalleRepo = detalleRepo;
         this.productoRepo = productoRepo;
         this.movRepo = movRepo;
+        this.usuarioRepo = usuarioRepo;
     }
 
     @Override
@@ -93,7 +98,16 @@ public class CompraServiceImpl implements CompraService {
     public CompraDTO registrarTransaccional(CompraWrapperDTO wrapper) {
         CompraDTO compra = wrapper.getCompra();
         compra.setEstado("A");
-        CompraEntity cEntity = repositorio.save(modelMapper.map(compra, CompraEntity.class));
+        
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UsuarioEntity usuarioLogueado = usuarioRepo.findByUsername(username);
+        
+        CompraEntity cEntity = modelMapper.map(compra, CompraEntity.class);
+        if (usuarioLogueado != null) {
+            cEntity.setUsuario(usuarioLogueado);
+        }
+        
+        cEntity = repositorio.save(cEntity);
         
         if (wrapper.getDetalles() != null) {
             for(DetalleCompraDTO det : wrapper.getDetalles()) {

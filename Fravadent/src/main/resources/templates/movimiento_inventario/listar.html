@@ -13,9 +13,14 @@
                 <h1 class="h4 fw-bold mb-0">Movimientos de Inventario</h1>
                 <p class="text-muted small mb-0">Historial de entradas y salidas de stock.</p>
             </div>
-            <a th:href="@{/movimiento_inventario/registrar}" class="btn btn-login">
-                <i class="bi bi-plus-lg me-1"></i> Nuevo movimiento
-            </a>
+            <div class="d-flex gap-2">
+                <button type="button" class="btn btn-outline-success" onclick="exportTableToCSV('movimientos_inventario.csv')">
+                    <i class="bi bi-file-earmark-spreadsheet me-1"></i> Excel (CSV)
+                </button>
+                <a th:href="@{/movimiento_inventario/registrar}" class="btn btn-login">
+                    <i class="bi bi-plus-lg me-1"></i> Nuevo movimiento
+                </a>
+            </div>
         </div>
 
         <div class="card border-0 shadow-sm">
@@ -75,5 +80,29 @@
     <footer th:replace="~{layout/base :: footer}"></footer>
     <th:block th:replace="~{layout/base :: scripts}"></th:block>
 
+    <script>
+        function exportTableToCSV(filename) {
+            let csv = [];
+            let rows = document.querySelectorAll("table tr");
+            for (let i = 0; i < rows.length; i++) {
+                let row = [], cols = rows[i].querySelectorAll("td, th");
+                if (cols.length === 1 && cols[0].colSpan > 1) continue;
+                let colCount = cols.length > 0 ? cols.length - 1 : 0; 
+                for (let j = 0; j < colCount; j++) {
+                    let text = cols[j].innerText.replace(/"/g, '""');
+                    row.push('"' + text + '"');
+                }
+                if(row.length > 0) csv.push(row.join(","));
+            }
+            let csvFile = new Blob(["\uFEFF" + csv.join("\n")], { type: "text/csv;charset=utf-8;" });
+            let downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
 </body>
 </html>

@@ -71,15 +71,6 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4">
-                            <label for="usuarioId" class="form-label small fw-semibold">
-                                Usuario que registra
-                            </label>
-                            <select class="form-select" id="usuarioId" required>
-                                <option value="">Seleccione...</option>
-                                <option th:each="u : ${usuarios}" th:value="${u.codigo}" th:text="${u.nombres + ' ' + u.apellidoPaterno}"></option>
-                            </select>
-                        </div>
 
                     </div>
                 </div>
@@ -245,7 +236,6 @@
                     cliente: { codigo: parseInt(document.getElementById('clienteId').value) },
                     metodoPago: { codigo: parseInt(document.getElementById('metodoPagoId').value) },
                     estadoVenta: { codigo: parseInt(document.getElementById('estadoVentaId').value) },
-                    usuario: { codigo: parseInt(document.getElementById('usuarioId').value) },
                     montoTotal: total
                 },
                 detalles: detalles

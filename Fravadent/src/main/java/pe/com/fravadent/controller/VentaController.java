@@ -16,7 +16,6 @@ import pe.com.fravadent.service.EstadoVentaService;
 import pe.com.fravadent.service.MetodoPagoService;
 import pe.com.fravadent.service.ProductoService;
 import pe.com.fravadent.service.TipoComprobanteService;
-import pe.com.fravadent.service.UsuarioService;
 import pe.com.fravadent.service.VentaService;
 import pe.com.fravadent.service.generic.GenericoService;
 
@@ -29,22 +28,18 @@ public class VentaController extends GenericoController<VentaDTO> {
     private final MetodoPagoService metodoPagoService;
     private final EstadoVentaService estadoVentaService;
     private final ProductoService productoService;
-    private final UsuarioService usuarioService;
-
     public VentaController(VentaService servicio,
                            ClienteService clienteService,
                            TipoComprobanteService tipoComprobanteService,
                            MetodoPagoService metodoPagoService,
                            EstadoVentaService estadoVentaService,
-                           ProductoService productoService,
-                           UsuarioService usuarioService) {
+                           ProductoService productoService) {
         this.servicio = servicio;
         this.clienteService = clienteService;
         this.tipoComprobanteService = tipoComprobanteService;
         this.metodoPagoService = metodoPagoService;
         this.estadoVentaService = estadoVentaService;
         this.productoService = productoService;
-        this.usuarioService = usuarioService;
     }
 
     @Override
@@ -54,7 +49,6 @@ public class VentaController extends GenericoController<VentaDTO> {
         model.addAttribute("metodopagos", metodoPagoService.findAllCustom());
         model.addAttribute("estadoventas", estadoVentaService.findAllCustom());
         model.addAttribute("productos", productoService.findAllCustom());
-        model.addAttribute("usuarios", usuarioService.findAllCustom());
     }
 
     @Override

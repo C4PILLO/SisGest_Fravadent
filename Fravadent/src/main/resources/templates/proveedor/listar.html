@@ -14,6 +14,9 @@
                 <p class="text-muted small mb-0">Listado de proveedores.</p>
             </div>
             <div class="d-flex gap-2">
+                <button type="button" class="btn btn-outline-success" onclick="exportTableToCSV('proveedores.csv')">
+                    <i class="bi bi-file-earmark-spreadsheet me-1"></i> Excel (CSV)
+                </button>
                 <a th:href="@{/proveedor/habilitar_vista}" class="btn btn-outline-secondary">
                     <i class="bi bi-toggle2-on me-1"></i> Habilitar / Deshabilitar
                 </a>
@@ -69,5 +72,29 @@
     <footer th:replace="~{layout/base :: footer}"></footer>
     <th:block th:replace="~{layout/base :: scripts}"></th:block>
 
+    <script>
+        function exportTableToCSV(filename) {
+            let csv = [];
+            let rows = document.querySelectorAll("table tr");
+            for (let i = 0; i < rows.length; i++) {
+                let row = [], cols = rows[i].querySelectorAll("td, th");
+                if (cols.length === 1 && cols[0].colSpan > 1) continue;
+                let colCount = cols.length > 0 ? cols.length - 1 : 0; 
+                for (let j = 0; j < colCount; j++) {
+                    let text = cols[j].innerText.replace(/"/g, '""');
+                    row.push('"' + text + '"');
+                }
+                if(row.length > 0) csv.push(row.join(","));
+            }
+            let csvFile = new Blob(["\uFEFF" + csv.join("\n")], { type: "text/csv;charset=utf-8;" });
+            let downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
 </body>
 </html>

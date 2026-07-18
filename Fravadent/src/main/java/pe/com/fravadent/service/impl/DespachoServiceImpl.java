@@ -3,20 +3,36 @@ package pe.com.fravadent.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pe.com.fravadent.dto.DespachoDTO;
 import pe.com.fravadent.entity.DespachoEntity;
+import pe.com.fravadent.entity.EstadoVentaEntity;
+import pe.com.fravadent.entity.UsuarioEntity;
+import pe.com.fravadent.entity.VentaEntity;
 import pe.com.fravadent.repository.DespachoRepository;
+import pe.com.fravadent.repository.EstadoVentaRepository;
+import pe.com.fravadent.repository.UsuarioRepository;
+import pe.com.fravadent.repository.VentaRepository;
 import pe.com.fravadent.service.DespachoService;
 
 @Service
 public class DespachoServiceImpl implements DespachoService {
     private final ModelMapper modelMapper;
     private final DespachoRepository repositorio;
+    private final VentaRepository ventaRepo;
+    private final EstadoVentaRepository estadoVentaRepo;
+    private final UsuarioRepository usuarioRepo;
 
-    public DespachoServiceImpl(DespachoRepository repositorio, ModelMapper modelMapper) {
+    public DespachoServiceImpl(DespachoRepository repositorio, ModelMapper modelMapper, 
+                               VentaRepository ventaRepo,
+                               EstadoVentaRepository estadoVentaRepo,
+                               UsuarioRepository usuarioRepo) {
         this.repositorio = repositorio;
         this.modelMapper = modelMapper;
+        this.ventaRepo = ventaRepo;
+        this.estadoVentaRepo = estadoVentaRepo;
+        this.usuarioRepo = usuarioRepo;
     }
 
     @Override
@@ -36,7 +52,12 @@ public class DespachoServiceImpl implements DespachoService {
 
     @Override
     public DespachoDTO add(DespachoDTO obj) {
+    	String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UsuarioEntity usuarioLogueado = usuarioRepo.findByUsername(username);
         DespachoEntity entity = modelMapper.map(obj, DespachoEntity.class);
+        if (usuarioLogueado != null) {
+            entity.setUsuario(usuarioLogueado);
+        }
         return modelMapper.map(repositorio.save(entity), DespachoDTO.class);
     }
 
@@ -49,7 +70,27 @@ public class DespachoServiceImpl implements DespachoService {
         entity.setEstadoDespacho(null);
         entity.setDistrito(null);
         modelMapper.map(obj, entity);
-        return modelMapper.map(repositorio.save(entity), DespachoDTO.class);
+        DespachoEntity savedDespacho = repositorio.save(entity);
+        
+        if (savedDespacho.getEstadoDespacho() != null && 
+            savedDespacho.getEstadoDespacho().getCodigo() != null) {
+            
+            if (savedDespacho.getEstadoDespacho().getCodigo() == 2L || 
+                "Entregado".equalsIgnoreCase(savedDespacho.getEstadoDespacho().getNombre())) {
+                
+                if (savedDespacho.getVenta() != null) {
+                    VentaEntity venta = savedDespacho.getVenta();
+                    
+                    EstadoVentaEntity estadoVenta = estadoVentaRepo.findById(2L).orElse(null);
+                    if (estadoVenta != null) {
+                        venta.setEstadoVenta(estadoVenta);
+                        ventaRepo.save(venta);
+                    }
+                }
+            }
+        }
+        
+        return modelMapper.map(savedDespacho, DespachoDTO.class);
     }
 
     @Override
