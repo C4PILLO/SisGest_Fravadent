@@ -1,5 +1,6 @@
 package pe.com.fravadent.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,6 +68,8 @@ public class CompraServiceImpl implements CompraService {
     @Override
     public CompraDTO update(CompraDTO obj, Long id) {
         CompraEntity entity = repositorio.findById(id).get();
+        entity.setProveedor(null);
+        entity.setUsuario(null);
         modelMapper.map(obj, entity);
         return modelMapper.map(repositorio.save(entity), CompraDTO.class);
     }
@@ -99,7 +102,7 @@ public class CompraServiceImpl implements CompraService {
                 detalleRepo.save(detEntity);
                 
                 ProductoEntity prod = productoRepo.findById(detEntity.getProducto().getCodigo()).orElseThrow();
-                prod.setStockActual(prod.getStockActual() + detEntity.getCantidad()); // Suma el stock
+                prod.setStockActual(prod.getStockActual() + detEntity.getCantidad());
                 productoRepo.save(prod);
                 
                 MovimientoInventarioEntity mov = new MovimientoInventarioEntity();
@@ -111,7 +114,7 @@ public class CompraServiceImpl implements CompraService {
                 mov.setReferenciaTipo("COMPRA");
                 mov.setReferenciaId(cEntity.getCodigo());
                 mov.setUsuario(cEntity.getUsuario());
-                mov.setFechaHora(java.time.LocalDateTime.now());
+                mov.setFechaHora(LocalDateTime.now());
                 movRepo.save(mov);
             }
         }

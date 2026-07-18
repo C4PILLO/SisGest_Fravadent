@@ -12,11 +12,6 @@
             <i class="bi bi-pencil-square me-1"></i> Editar cliente
         </h1>
 
-        <!--
-          PENDIENTE (backend): mismo pendiente que en registrar.html — cargarCombos()
-          en ClienteController debe agregar "tipodocumentos" y "distritos" al Model.
-        -->
-
         <div class="card border-0 shadow-sm" style="max-width:700px;">
             <div class="card-body p-4">
 
@@ -28,18 +23,12 @@
 
                     <div class="row g-3">
 
-                        <!-- Tipo de documento -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Tipo de documento</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${cliente.tipoDocumento != null} ? ${cliente.tipoDocumento.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{tipoDocumento.codigo}" required>
                                 <option th:each="t : ${tipodocumentos}" th:value="${t.codigo}" th:text="${t.nombre}"
                                         th:selected="${cliente.tipoDocumento != null and t.codigo == cliente.tipoDocumento.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-8">
@@ -91,18 +80,12 @@
                             <input type="text" class="form-control" id="direccion" th:field="*{direccion}" maxlength="150">
                         </div>
 
-                        <!-- Distrito -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Distrito</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${cliente.distrito != null} ? ${cliente.distrito.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{distrito.codigo}" required>
                                 <option th:each="d : ${distritos}" th:value="${d.codigo}" th:text="${d.nombre}"
                                         th:selected="${cliente.distrito != null and d.codigo == cliente.distrito.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
                     </div>

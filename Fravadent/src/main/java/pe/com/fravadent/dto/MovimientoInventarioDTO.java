@@ -17,8 +17,6 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class MovimientoInventarioDTO extends BaseDTO {
-    private String estado;
-
     private ProductoDTO producto;
 
     private TipoMovimientoDTO tipoMovimiento;

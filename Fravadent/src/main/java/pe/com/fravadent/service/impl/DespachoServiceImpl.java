@@ -36,7 +36,6 @@ public class DespachoServiceImpl implements DespachoService {
 
     @Override
     public DespachoDTO add(DespachoDTO obj) {
-        obj.setEstado("A");
         DespachoEntity entity = modelMapper.map(obj, DespachoEntity.class);
         return modelMapper.map(repositorio.save(entity), DespachoDTO.class);
     }
@@ -44,6 +43,11 @@ public class DespachoServiceImpl implements DespachoService {
     @Override
     public DespachoDTO update(DespachoDTO obj, Long id) {
         DespachoEntity entity = repositorio.findById(id).get();
+        entity.setVenta(null);
+        entity.setUsuario(null);
+        entity.setTipoDespacho(null);
+        entity.setEstadoDespacho(null);
+        entity.setDistrito(null);
         modelMapper.map(obj, entity);
         return modelMapper.map(repositorio.save(entity), DespachoDTO.class);
     }
@@ -51,14 +55,12 @@ public class DespachoServiceImpl implements DespachoService {
     @Override
     public DespachoDTO delete(Long id) {
         DespachoEntity entity = repositorio.findById(id).get();
-        entity.setEstado("I");
-        return modelMapper.map(repositorio.save(entity), DespachoDTO.class);
+        repositorio.delete(entity);
+        return modelMapper.map(entity, DespachoDTO.class);
     }
 
     @Override
     public DespachoDTO enable(Long id) {
-        DespachoEntity entity = repositorio.findById(id).get();
-        entity.setEstado("A");
-        return modelMapper.map(repositorio.save(entity), DespachoDTO.class);
+        return modelMapper.map(repositorio.findById(id).get(), DespachoDTO.class);
     }
 }

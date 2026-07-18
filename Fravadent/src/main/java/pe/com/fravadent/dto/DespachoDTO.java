@@ -17,8 +17,6 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class DespachoDTO extends BaseDTO {
-    private String estado;
-
     private VentaDTO venta;
 
     private UsuarioDTO usuario;

@@ -60,7 +60,6 @@ public class VentaServiceImpl implements VentaService {
 
     @Override
     public VentaDTO add(VentaDTO obj) {
-        obj.setEstado("A");
         VentaEntity entity = modelMapper.map(obj, VentaEntity.class);
         return modelMapper.map(repositorio.save(entity), VentaDTO.class);
     }
@@ -68,6 +67,11 @@ public class VentaServiceImpl implements VentaService {
     @Override
     public VentaDTO update(VentaDTO obj, Long id) {
         VentaEntity entity = repositorio.findById(id).get();
+        entity.setTipoComprobante(null);
+        entity.setCliente(null);
+        entity.setUsuario(null);
+        entity.setMetodoPago(null);
+        entity.setEstadoVenta(null);
         modelMapper.map(obj, entity);
         return modelMapper.map(repositorio.save(entity), VentaDTO.class);
     }
@@ -75,22 +79,19 @@ public class VentaServiceImpl implements VentaService {
     @Override
     public VentaDTO delete(Long id) {
         VentaEntity entity = repositorio.findById(id).get();
-        entity.setEstado("I");
-        return modelMapper.map(repositorio.save(entity), VentaDTO.class);
+        repositorio.delete(entity);
+        return modelMapper.map(entity, VentaDTO.class);
     }
 
     @Override
     public VentaDTO enable(Long id) {
-        VentaEntity entity = repositorio.findById(id).get();
-        entity.setEstado("A");
-        return modelMapper.map(repositorio.save(entity), VentaDTO.class);
+        return modelMapper.map(repositorio.findById(id).get(), VentaDTO.class);
     }
 
     @Transactional
     @Override
     public VentaDTO registrarTransaccional(VentaWrapperDTO wrapper) {
         VentaDTO venta = wrapper.getVenta();
-        venta.setEstado("A");
         VentaEntity vEntity = repositorio.save(modelMapper.map(venta, VentaEntity.class));
         
         if (wrapper.getDetalles() != null) {

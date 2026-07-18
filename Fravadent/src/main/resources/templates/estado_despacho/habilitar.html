@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{layout/base :: head('Habilitar estados de venta')}"></head>
+<head th:replace="~{layout/base :: head('Habilitar estados de despacho')}"></head>
 
 <body>
     <nav th:replace="~{layout/base :: navbar}"></nav>
@@ -10,10 +10,10 @@
 
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-                <h1 class="h4 fw-bold mb-0">Habilitar / Deshabilitar estados de venta</h1>
-                <p class="text-muted small mb-0">Aquí ves todos los estados de venta, activos e inactivos.</p>
+                <h1 class="h4 fw-bold mb-0">Habilitar / Deshabilitar estados de despacho</h1>
+                <p class="text-muted small mb-0">Aquí ves todos los estados de despacho, activos e inactivos.</p>
             </div>
-            <a th:href="@{/estado_venta/listar}" class="btn btn-outline-secondary">
+            <a th:href="@{/estado_despacho/listar}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-1"></i> Volver al listado
             </a>
         </div>
@@ -30,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${estadoventas}">
+                        <tr th:each="item : ${estadodespachos}">
                             <td th:text="${item.codigo}">1</td>
                             <td th:text="${item.nombre}">Nombre</td>
                             <td>
@@ -39,18 +39,18 @@
                             </td>
                             <td class="text-end">
                                 <a th:if="${item.estado == 'A'}"
-                                   th:href="@{/estado_venta/deshabilitar/{id}(id=${item.codigo})}"
+                                   th:href="@{/estado_despacho/deshabilitar/{id}(id=${item.codigo})}"
                                    class="btn btn-sm btn-outline-danger">
                                     <i class="bi bi-toggle-off me-1"></i> Deshabilitar
                                 </a>
                                 <a th:unless="${item.estado == 'A'}"
-                                   th:href="@{/estado_venta/habilitar/{id}(id=${item.codigo})}"
+                                   th:href="@{/estado_despacho/habilitar/{id}(id=${item.codigo})}"
                                    class="btn btn-sm btn-outline-success">
                                     <i class="bi bi-toggle-on me-1"></i> Habilitar
                                 </a>
                             </td>
                         </tr>
-                        <tr th:if="${estadoventas.isEmpty()}">
+                        <tr th:if="${estadodespachos.isEmpty()}">
                             <td colspan="4" class="text-center text-muted py-4">
                                 No hay registros todavía.
                             </td>

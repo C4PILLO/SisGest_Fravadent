@@ -8,6 +8,6 @@ import pe.com.fravadent.entity.DetalleVentaEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface DetalleVentaRepository extends GenericoRepository<DetalleVentaEntity, Long> {
-    @Query("select e from DetalleVentaEntity e where e.estado='A'")
+    @Query("select e from DetalleVentaEntity e")
     List<DetalleVentaEntity> findAllCustom();
 }

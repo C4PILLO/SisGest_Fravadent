@@ -12,28 +12,6 @@
             <i class="bi bi-plus-circle me-1"></i> Nuevo despacho
         </h1>
 
-        <!--
-          PENDIENTE (backend) — 2 bloqueos distintos:
-
-          1) Bug de esquema: DespachoEntity tiene un campo "estado" que no existe como
-             columna en la tabla "despacho" real. findAllCustom() filtra por e.estado='A',
-             así que CUALQUIER consulta a despacho (listar incluido) va a fallar con un
-             error SQL hasta que se resuelva (agregar la columna, o quitar el campo del
-             Entity/DTO/Repository). Esto no es un tema de vistas, es de BD/Entity.
-
-          2) Combos: cargarCombos() en DespachoController debe agregar al Model:
-               "ventas"           -> List<VentaDTO>            (ideal: solo ventas sin despacho aún)
-               "usuarios"         -> List<UsuarioDTO>
-               "tipodespachos"    -> List<TipoDespachoDTO>
-               "estadodespachos"  -> List<EstadoDespachoDTO>
-               "distritos"        -> List<DistritoDTO>
-             Los <select> reales están comentados más abajo, listos para descomentar.
-        -->
-
-        <div class="alert alert-warning small mb-3" style="max-width:700px;">
-            <i class="bi bi-exclamation-triangle me-1"></i>
-            Este módulo no va a funcionar todavía (ni siquiera el listado) por un
-            desajuste entre la tabla <code>despacho</code> y su Entity. Ver comentario
             en el código fuente.
         </div>
 
@@ -44,53 +22,37 @@
 
                     <div class="row g-3">
 
-                        <!-- Venta -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Venta</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{venta.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="v : ${ventas}" th:value="${v.codigo}" th:text="${v.nroComprobante}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Usuario que despacha -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Usuario que despacha</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{usuario.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="u : ${usuarios}" th:value="${u.codigo}"
                                         th:text="${u.nombres + ' ' + u.apellidoPaterno}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Tipo de despacho -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Tipo de despacho</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{tipoDespacho.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="t : ${tipodespachos}" th:value="${t.codigo}" th:text="${t.nombre}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Estado de despacho -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Estado</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{estadoDespacho.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="e : ${estadodespachos}" th:value="${e.codigo}" th:text="${e.nombre}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-8">
@@ -98,16 +60,12 @@
                             <input type="text" class="form-control" id="direccionEntrega" th:field="*{direccionEntrega}" maxlength="150">
                         </div>
 
-                        <!-- Distrito -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Distrito</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{distrito.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="d : ${distritos}" th:value="${d.codigo}" th:text="${d.nombre}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-6">

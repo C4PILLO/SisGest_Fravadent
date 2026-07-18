@@ -19,6 +19,12 @@ import pe.com.fravadent.dto.base.BaseDTO;
 public class UsuarioDTO extends BaseDTO {
     private String estado;
 
+    private String username;
+
+    private String password_hash;
+
+    private RolDTO rol;
+
     private TipoDocumentoDTO tipoDocumento;
 
     private String numeroDocumento;

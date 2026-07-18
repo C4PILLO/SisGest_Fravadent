@@ -33,9 +33,6 @@ public class VentaEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    @Column(name="estado", length = 1, nullable = false)
-    private String estado;
-
     @Column(name = "nro_comprobante")
     private String nroComprobante;
 

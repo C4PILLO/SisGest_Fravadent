@@ -18,8 +18,6 @@ import pe.com.fravadent.dto.base.BaseDTO;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 public class VentaDTO extends BaseDTO {
-    private String estado;
-
     private String nroComprobante;
 
     private TipoComprobanteDTO tipoComprobante;

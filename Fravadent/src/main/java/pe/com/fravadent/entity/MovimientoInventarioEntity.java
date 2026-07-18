@@ -32,9 +32,6 @@ public class MovimientoInventarioEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    @Column(name="estado", length = 1, nullable = false)
-    private String estado;
-
     @ManyToOne
     @JoinColumn(name = "id_producto")
     private ProductoEntity producto;

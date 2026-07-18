@@ -2,6 +2,7 @@ package pe.com.fravadent.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,15 +12,34 @@ import pe.com.fravadent.controller.generic.GenericoController;
 import pe.com.fravadent.dto.CompraDTO;
 import pe.com.fravadent.dto.wrapper.CompraWrapperDTO;
 import pe.com.fravadent.service.CompraService;
+import pe.com.fravadent.service.ProveedorService;
+import pe.com.fravadent.service.UsuarioService;
+import pe.com.fravadent.service.ProductoService;
 import pe.com.fravadent.service.generic.GenericoService;
 
 @Controller
 @RequestMapping("/compra")
 public class CompraController extends GenericoController<CompraDTO> {
     private final CompraService servicio;
+    private final ProveedorService proveedorService;
+    private final UsuarioService usuarioService;
+    private final ProductoService productoService;
 
-    public CompraController(CompraService servicio) {
+    public CompraController(CompraService servicio, 
+                            ProveedorService proveedorService, 
+                            UsuarioService usuarioService, 
+                            ProductoService productoService) {
         this.servicio = servicio;
+        this.proveedorService = proveedorService;
+        this.usuarioService = usuarioService;
+        this.productoService = productoService;
+    }
+
+    @Override
+    protected void cargarCombos(Model modelo) {
+        modelo.addAttribute("proveedors", proveedorService.findAllCustom());
+        modelo.addAttribute("usuarios", usuarioService.findAllCustom());
+        modelo.addAttribute("productos", productoService.findAllCustom());
     }
 
     @Override

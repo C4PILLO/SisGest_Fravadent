@@ -8,14 +8,6 @@
 
     <main class="container-fluid py-4 px-4">
 
-        <!--
-          PENDIENTE (backend): igual que en despacho, MovimientoInventarioEntity tiene
-          un campo "estado" que no existe como columna en la tabla real, y
-          findAllCustom() filtra por él — este módulo no va a funcionar hasta resolverlo.
-          De paso: un movimiento de inventario ya ocurrido probablemente no necesite
-          "deshabilitarse" — evaluar si el campo estado debería existir aquí siquiera.
-        -->
-
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
                 <h1 class="h4 fw-bold mb-0">Movimientos de Inventario</h1>
@@ -53,12 +45,17 @@
                                 </td>
                                 <td class="text-end" th:text="${item.cantidad}">0</td>
                                 <td th:text="${item.fechaHora != null} ? ${#temporals.format(item.fechaHora, 'dd/MM/yyyy HH:mm')} : '-'">-</td>
-                                <td th:text="${item.referenciaTipo != null} ? (${item.referenciaTipo} + ' #' + ${item.referenciaId}) : '-'">-</td>
+                                <td th:text="${item.referenciaTipo != null and item.referenciaTipo != ''} ? (${item.referenciaTipo} + (${item.referenciaId != null} ? (' #' + ${item.referenciaId}) : '')) : '-'">-</td>
                                 <td th:text="${item.usuario != null} ? (${item.usuario.nombres} + ' ' + ${item.usuario.apellidoPaterno}) : '-'">Usuario</td>
                                 <td class="text-end">
                                     <a th:href="@{/movimiento_inventario/actualizar/{id}(id=${item.codigo})}"
                                        class="btn btn-sm btn-outline-primary" title="Editar">
                                         <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a th:href="@{/movimiento_inventario/eliminar/{id}(id=${item.codigo})}"
+                                       class="btn btn-sm btn-outline-danger ms-1" title="Eliminar"
+                                       onclick="return confirm('¿Está seguro de eliminar este movimiento físico?');">
+                                        <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
                             </tr>

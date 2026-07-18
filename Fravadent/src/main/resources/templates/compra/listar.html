@@ -14,9 +14,6 @@
                 <p class="text-muted small mb-0">Listado de compras activas.</p>
             </div>
             <div class="d-flex gap-2">
-                <a th:href="@{/compra/habilitar_vista}" class="btn btn-outline-secondary">
-                    <i class="bi bi-toggle2-on me-1"></i> Habilitar / Deshabilitar
-                </a>
                 <a th:href="@{/compra/registrar}" class="btn btn-login">
                     <i class="bi bi-plus-lg me-1"></i> Nueva compra
                 </a>
@@ -49,6 +46,10 @@
                                        class="btn btn-sm btn-outline-primary" title="Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" title="Imprimir"
+                                            onclick="window.print()">
+                                        <i class="bi bi-printer"></i>
+                                    </button>
                                 </td>
                             </tr>
                             <tr th:if="${compras.isEmpty()}">

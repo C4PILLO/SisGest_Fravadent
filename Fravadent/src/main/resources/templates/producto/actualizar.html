@@ -12,14 +12,6 @@
             <i class="bi bi-pencil-square me-1"></i> Editar producto
         </h1>
 
-        <!--
-          PENDIENTE (backend): mismo pendiente que en registrar.html — cargarCombos()
-          en ProductoController debe agregar "categorias", "marcas", "unidadmedidas".
-          Además, para que el <select> ya muestre seleccionada la opción actual del
-          producto, cada <option> debe comparar contra el código actual, por ejemplo:
-            th:selected="${c.codigo == producto.categoria?.codigo}"
-        -->
-
         <div class="card border-0 shadow-sm" style="max-width:700px;">
             <div class="card-body p-4">
 
@@ -44,46 +36,28 @@
                                    required maxlength="300">
                         </div>
 
-                        <!-- Categoría -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Categoría</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${producto.categoria != null} ? ${producto.categoria.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{categoria.codigo}" required>
                                 <option th:each="c : ${categorias}" th:value="${c.codigo}" th:text="${c.nombre}"
                                         th:selected="${producto.categoria != null and c.codigo == producto.categoria.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Marca -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Marca</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${producto.marca != null} ? ${producto.marca.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{marca.codigo}" required>
                                 <option th:each="m : ${marcas}" th:value="${m.codigo}" th:text="${m.nombre}"
                                         th:selected="${producto.marca != null and m.codigo == producto.marca.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Unidad de medida -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Unidad de medida</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${producto.unidadMedida != null} ? ${producto.unidadMedida.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{unidadMedida.codigo}" required>
                                 <option th:each="u : ${unidadmedidas}" th:value="${u.codigo}" th:text="${u.nombre}"
                                         th:selected="${producto.unidadMedida != null and u.codigo == producto.unidadMedida.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-3">

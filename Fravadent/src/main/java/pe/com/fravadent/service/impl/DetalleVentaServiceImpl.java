@@ -36,7 +36,6 @@ public class DetalleVentaServiceImpl implements DetalleVentaService {
 
     @Override
     public DetalleVentaDTO add(DetalleVentaDTO obj) {
-        obj.setEstado("A");
         DetalleVentaEntity entity = modelMapper.map(obj, DetalleVentaEntity.class);
         return modelMapper.map(repositorio.save(entity), DetalleVentaDTO.class);
     }
@@ -51,14 +50,12 @@ public class DetalleVentaServiceImpl implements DetalleVentaService {
     @Override
     public DetalleVentaDTO delete(Long id) {
         DetalleVentaEntity entity = repositorio.findById(id).get();
-        entity.setEstado("I");
-        return modelMapper.map(repositorio.save(entity), DetalleVentaDTO.class);
+        repositorio.delete(entity);
+        return modelMapper.map(entity, DetalleVentaDTO.class);
     }
 
     @Override
     public DetalleVentaDTO enable(Long id) {
-        DetalleVentaEntity entity = repositorio.findById(id).get();
-        entity.setEstado("A");
-        return modelMapper.map(repositorio.save(entity), DetalleVentaDTO.class);
+        return modelMapper.map(repositorio.findById(id).get(), DetalleVentaDTO.class);
     }
 }

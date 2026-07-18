@@ -12,47 +12,37 @@
             <i class="bi bi-plus-circle me-1"></i> Nuevo usuario
         </h1>
 
-        <!--
-          PENDIENTE (backend) — 2 bloqueos distintos:
-
-          1) Combos: cargarCombos() en UsuarioController debe agregar al Model:
-               "tipodocumentos" -> List<TipoDocumentoDTO>
-               "sexos"          -> List<SexoDTO>
-               "distritos"      -> List<DistritoDTO>
-             Los <select> reales están comentados más abajo, listos para descomentar.
-
-          2) Más grave: UsuarioDTO NO tiene los campos "username", "password" y "rol",
-             aunque en la base son NOT NULL (y username es UNIQUE). Sin esos 3 campos
-             en el DTO, este formulario no puede crear un usuario con credenciales de
-             login. Falta agregarlos al DTO (el password debe encriptarse con
-             GenerarEncriptacion antes de guardar, en el service). No agrego esos
-             campos al formulario todavía porque no existe dónde recibirlos del
-             lado del servidor.
-        -->
-
         <div class="card border-0 shadow-sm" style="max-width:700px;">
             <div class="card-body p-4">
 
-                <div class="alert alert-warning small mb-3">
-                    <i class="bi bi-exclamation-triangle me-1"></i>
-                    Este formulario todavía no puede crear el usuario/clave de acceso —
-                    falta que el DTO soporte esos campos. Ver comentario en el código fuente.
-                </div>
+
 
                 <form th:action="@{/usuario/registrar}" th:object="${usuario}" method="post">
 
                     <div class="row g-3">
+                        
+                        <div class="col-md-4">
+                            <label for="username" class="form-label small fw-semibold">Usuario</label>
+                            <input type="text" class="form-control" id="username" th:field="*{username}" required maxlength="50">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="password_hash" class="form-label small fw-semibold">Contraseña</label>
+                            <input type="password" class="form-control" id="password_hash" th:field="*{password_hash}" required maxlength="255">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Rol</label>
+                            <select class="form-select" th:field="*{rol.codigo}" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="r : ${roles}" th:value="${r.codigo}" th:text="${r.nombre}"></option>
+                            </select>
+                        </div>
 
-                        <!-- Tipo de documento -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Tipo de documento</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{tipoDocumento.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="t : ${tipodocumentos}" th:value="${t.codigo}" th:text="${t.nombre}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-8">
@@ -79,16 +69,12 @@
                                    required maxlength="50">
                         </div>
 
-                        <!-- Sexo -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Sexo</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{sexo.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="s : ${sexos}" th:value="${s.codigo}" th:text="${s.nombre}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-4">
@@ -106,16 +92,12 @@
                             <input type="text" class="form-control" id="direccion" th:field="*{direccion}" maxlength="150">
                         </div>
 
-                        <!-- Distrito -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Distrito</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{distrito.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="d : ${distritos}" th:value="${d.codigo}" th:text="${d.nombre}"></option>
                             </select>
-                            -->
                         </div>
 
                     </div>

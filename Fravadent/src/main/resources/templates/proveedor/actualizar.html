@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{layout/base :: head('Editar despacho')}"></head>
+<head th:replace="~{layout/base :: head('Editar proveedor')}"></head>
 
 <body>
     <nav th:replace="~{layout/base :: navbar}"></nav>
@@ -9,122 +9,58 @@
     <main class="container py-4">
 
         <h1 class="h4 fw-bold mb-3">
-            <i class="bi bi-pencil-square me-1"></i> Editar despacho
+            <i class="bi bi-pencil-square me-1"></i> Editar proveedor
         </h1>
-
-        <!--
-          PENDIENTE (backend): mismos 2 pendientes que en registrar.html —
-          bug de esquema (columna "estado" inexistente en la tabla despacho)
-          y cargarCombos() con "ventas", "usuarios", "tipodespachos",
-          "estadodespachos", "distritos".
-        -->
 
         <div class="card border-0 shadow-sm" style="max-width:700px;">
             <div class="card-body p-4">
 
                 <div class="mb-2">
-                    <span class="text-muted small">Código: <span th:text="${despacho.codigo}">0</span></span>
+                    <span class="text-muted small">Código: <span th:text="${proveedor.codigo}">0</span></span>
                 </div>
 
-                <form th:action="@{/despacho/actualizar/{id}(id=${despacho.codigo})}" th:object="${despacho}" method="post">
+                <form th:action="@{/proveedor/actualizar/{id}(id=${proveedor.codigo})}" th:object="${proveedor}" method="post">
 
                     <div class="row g-3">
 
-                        <!-- Venta -->
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold">Venta</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.venta != null} ? ${despacho.venta.nroComprobante} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
-                            <select class="form-select" th:field="*{venta.codigo}" required>
-                                <option th:each="v : ${ventas}" th:value="${v.codigo}" th:text="${v.nroComprobante}"
-                                        th:selected="${despacho.venta != null and v.codigo == despacho.venta.codigo}"></option>
-                            </select>
-                            -->
-                        </div>
-
-                        <!-- Usuario que despacha -->
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold">Usuario que despacha</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.usuario != null} ? (${despacho.usuario.nombres} + ' ' + ${despacho.usuario.apellidoPaterno}) : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
-                            <select class="form-select" th:field="*{usuario.codigo}" required>
-                                <option th:each="u : ${usuarios}" th:value="${u.codigo}"
-                                        th:text="${u.nombres + ' ' + u.apellidoPaterno}"
-                                        th:selected="${despacho.usuario != null and u.codigo == despacho.usuario.codigo}"></option>
-                            </select>
-                            -->
-                        </div>
-
-                        <!-- Tipo de despacho -->
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold">Tipo de despacho</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.tipoDespacho != null} ? ${despacho.tipoDespacho.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
-                            <select class="form-select" th:field="*{tipoDespacho.codigo}" required>
-                                <option th:each="t : ${tipodespachos}" th:value="${t.codigo}" th:text="${t.nombre}"
-                                        th:selected="${despacho.tipoDespacho != null and t.codigo == despacho.tipoDespacho.codigo}"></option>
-                            </select>
-                            -->
-                        </div>
-
-                        <!-- Estado de despacho -->
-                        <div class="col-md-6">
-                            <label class="form-label small fw-semibold">Estado</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.estadoDespacho != null} ? ${despacho.estadoDespacho.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
-                            <select class="form-select" th:field="*{estadoDespacho.codigo}" required>
-                                <option th:each="e : ${estadodespachos}" th:value="${e.codigo}" th:text="${e.nombre}"
-                                        th:selected="${despacho.estadoDespacho != null and e.codigo == despacho.estadoDespacho.codigo}"></option>
-                            </select>
-                            -->
+                        <div class="col-md-4">
+                            <label for="ruc" class="form-label small fw-semibold">RUC</label>
+                            <input type="text" class="form-control" id="ruc" th:field="*{ruc}" required maxlength="11">
                         </div>
 
                         <div class="col-md-8">
-                            <label for="direccionEntrega" class="form-label small fw-semibold">Dirección de entrega</label>
-                            <input type="text" class="form-control" id="direccionEntrega" th:field="*{direccionEntrega}" maxlength="150">
+                            <label for="razonSocial" class="form-label small fw-semibold">Razón Social</label>
+                            <input type="text" class="form-control" id="razonSocial" th:field="*{razonSocial}" required maxlength="100">
                         </div>
 
-                        <!-- Distrito -->
-                        <div class="col-md-4">
+
+                        <div class="col-md-6">
+                            <label for="telefono" class="form-label small fw-semibold">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" th:field="*{telefono}" maxlength="20">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="email" class="form-label small fw-semibold">Email</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}" maxlength="100">
+                        </div>
+
+                        <div class="col-md-6">
                             <label class="form-label small fw-semibold">Distrito</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.distrito != null} ? ${despacho.distrito.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{distrito.codigo}" required>
                                 <option th:each="d : ${distritos}" th:value="${d.codigo}" th:text="${d.nombre}"
-                                        th:selected="${despacho.distrito != null and d.codigo == despacho.distrito.codigo}"></option>
+                                        th:selected="${proveedor.distrito != null and d.codigo == proveedor.distrito.codigo}"></option>
                             </select>
-                            -->
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="fechaProgramada" class="form-label small fw-semibold">Fecha programada</label>
-                            <input type="datetime-local" class="form-control" id="fechaProgramada" th:field="*{fechaProgramada}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="fechaEntregaReal" class="form-label small fw-semibold">Fecha entrega real</label>
-                            <input type="datetime-local" class="form-control" id="fechaEntregaReal" th:field="*{fechaEntregaReal}">
                         </div>
 
                         <div class="col-12">
-                            <label for="observaciones" class="form-label small fw-semibold">Observaciones</label>
-                            <textarea class="form-control" id="observaciones" th:field="*{observaciones}" rows="2" maxlength="255"></textarea>
+                            <label for="direccion" class="form-label small fw-semibold">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" th:field="*{direccion}" maxlength="150">
                         </div>
 
                     </div>
 
                     <div class="d-flex gap-2 justify-content-end mt-4">
-                        <a th:href="@{/despacho/listar}" class="btn btn-outline-secondary">
+                        <a th:href="@{/proveedor/listar}" class="btn btn-outline-secondary">
                             Cancelar
                         </a>
                         <button type="submit" class="btn btn-login">

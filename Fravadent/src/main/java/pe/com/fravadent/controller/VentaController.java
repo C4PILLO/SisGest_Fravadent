@@ -2,6 +2,7 @@ package pe.com.fravadent.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import pe.com.fravadent.controller.generic.GenericoController;
 import pe.com.fravadent.dto.VentaDTO;
 import pe.com.fravadent.dto.wrapper.VentaWrapperDTO;
+import pe.com.fravadent.service.ClienteService;
+import pe.com.fravadent.service.EstadoVentaService;
+import pe.com.fravadent.service.MetodoPagoService;
+import pe.com.fravadent.service.ProductoService;
+import pe.com.fravadent.service.TipoComprobanteService;
+import pe.com.fravadent.service.UsuarioService;
 import pe.com.fravadent.service.VentaService;
 import pe.com.fravadent.service.generic.GenericoService;
 
@@ -17,9 +24,37 @@ import pe.com.fravadent.service.generic.GenericoService;
 @RequestMapping("/venta")
 public class VentaController extends GenericoController<VentaDTO> {
     private final VentaService servicio;
+    private final ClienteService clienteService;
+    private final TipoComprobanteService tipoComprobanteService;
+    private final MetodoPagoService metodoPagoService;
+    private final EstadoVentaService estadoVentaService;
+    private final ProductoService productoService;
+    private final UsuarioService usuarioService;
 
-    public VentaController(VentaService servicio) {
+    public VentaController(VentaService servicio,
+                           ClienteService clienteService,
+                           TipoComprobanteService tipoComprobanteService,
+                           MetodoPagoService metodoPagoService,
+                           EstadoVentaService estadoVentaService,
+                           ProductoService productoService,
+                           UsuarioService usuarioService) {
         this.servicio = servicio;
+        this.clienteService = clienteService;
+        this.tipoComprobanteService = tipoComprobanteService;
+        this.metodoPagoService = metodoPagoService;
+        this.estadoVentaService = estadoVentaService;
+        this.productoService = productoService;
+        this.usuarioService = usuarioService;
+    }
+
+    @Override
+    protected void cargarCombos(Model model) {
+        model.addAttribute("clientes", clienteService.findAllCustom());
+        model.addAttribute("tipocomprobantes", tipoComprobanteService.findAllCustom());
+        model.addAttribute("metodopagos", metodoPagoService.findAllCustom());
+        model.addAttribute("estadoventas", estadoVentaService.findAllCustom());
+        model.addAttribute("productos", productoService.findAllCustom());
+        model.addAttribute("usuarios", usuarioService.findAllCustom());
     }
 
     @Override

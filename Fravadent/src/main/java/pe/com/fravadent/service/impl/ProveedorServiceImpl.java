@@ -1,5 +1,6 @@
 package pe.com.fravadent.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
@@ -37,6 +38,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     @Override
     public ProveedorDTO add(ProveedorDTO obj) {
         obj.setEstado("A");
+        obj.setFechaRegistro(LocalDate.now());
         ProveedorEntity entity = modelMapper.map(obj, ProveedorEntity.class);
         return modelMapper.map(repositorio.save(entity), ProveedorDTO.class);
     }
@@ -44,6 +46,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     @Override
     public ProveedorDTO update(ProveedorDTO obj, Long id) {
         ProveedorEntity entity = repositorio.findById(id).get();
+        entity.setDistrito(null);
         modelMapper.map(obj, entity);
         return modelMapper.map(repositorio.save(entity), ProveedorDTO.class);
     }

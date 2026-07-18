@@ -12,12 +12,6 @@
             <i class="bi bi-pencil-square me-1"></i> Editar movimiento de inventario
         </h1>
 
-        <!--
-          PENDIENTE (backend): mismos 2 pendientes que en registrar.html —
-          bug de esquema (columna "estado" inexistente) y cargarCombos() con
-          "productos", "tipomovimientos", "usuarios".
-        -->
-
         <div class="card border-0 shadow-sm" style="max-width:600px;">
             <div class="card-body p-4">
 
@@ -30,32 +24,20 @@
 
                     <div class="row g-3">
 
-                        <!-- Producto -->
                         <div class="col-12">
                             <label class="form-label small fw-semibold">Producto</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${movimientoinventario.producto != null} ? ${movimientoinventario.producto.nombreDescripcion} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{producto.codigo}" required>
                                 <option th:each="p : ${productos}" th:value="${p.codigo}" th:text="${p.nombreDescripcion}"
                                         th:selected="${movimientoinventario.producto != null and p.codigo == movimientoinventario.producto.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Tipo de movimiento -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Tipo de movimiento</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${movimientoinventario.tipoMovimiento != null} ? ${movimientoinventario.tipoMovimiento.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{tipoMovimiento.codigo}" required>
                                 <option th:each="t : ${tipomovimientos}" th:value="${t.codigo}" th:text="${t.nombre}"
                                         th:selected="${movimientoinventario.tipoMovimiento != null and t.codigo == movimientoinventario.tipoMovimiento.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-6">
@@ -73,19 +55,13 @@
                             <input type="number" class="form-control" id="referenciaId" th:field="*{referenciaId}">
                         </div>
 
-                        <!-- Usuario -->
                         <div class="col-12">
                             <label class="form-label small fw-semibold">Usuario</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${movimientoinventario.usuario != null} ? (${movimientoinventario.usuario.nombres} + ' ' + ${movimientoinventario.usuario.apellidoPaterno}) : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{usuario.codigo}" required>
                                 <option th:each="u : ${usuarios}" th:value="${u.codigo}"
                                         th:text="${u.nombres + ' ' + u.apellidoPaterno}"
                                         th:selected="${movimientoinventario.usuario != null and u.codigo == movimientoinventario.usuario.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-12">

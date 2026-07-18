@@ -12,16 +12,6 @@
             <i class="bi bi-plus-circle me-1"></i> Nuevo producto
         </h1>
 
-        <!--
-          PENDIENTE (backend): los 3 <select> de abajo (Categoría, Marca, Unidad de medida)
-          necesitan que ProductoController sobrescriba cargarCombos() agregando al Model:
-            "categorias"    -> List<CategoriaDTO>    (ya usado igual en /categoria_producto)
-            "marcas"        -> List<MarcaDTO>        (ya usado igual en /marca)
-            "unidadmedidas" -> List<UnidadMedidaDTO>  (ya usado igual en /unidad_medida)
-          Mientras tanto, dejo un campo deshabilitado de aviso en su lugar y el <select>
-          real comentado, listo para descomentar apenas el combo exista en el Model.
-        -->
-
         <div class="card border-0 shadow-sm" style="max-width:700px;">
             <div class="card-body p-4">
 
@@ -41,40 +31,28 @@
                                    placeholder="Ej: Kit de resina compuesta A2" required maxlength="300">
                         </div>
 
-                        <!-- Categoría -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Categoría</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{categoria.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="c : ${categorias}" th:value="${c.codigo}" th:text="${c.nombre}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Marca -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Marca</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{marca.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="m : ${marcas}" th:value="${m.codigo}" th:text="${m.nombre}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Unidad de medida -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Unidad de medida</label>
-                            <input type="text" class="form-control" disabled placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{unidadMedida.codigo}" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="u : ${unidadmedidas}" th:value="${u.codigo}" th:text="${u.nombre}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-3">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{layout/base :: head('Despachos')}"></head>
+<head th:replace="~{layout/base :: head('Proveedores')}"></head>
 
 <body>
     <nav th:replace="~{layout/base :: navbar}"></nav>
@@ -10,12 +10,17 @@
 
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-                <h1 class="h4 fw-bold mb-0">Despachos</h1>
-                <p class="text-muted small mb-0">Listado de despachos.</p>
+                <h1 class="h4 fw-bold mb-0">Proveedores</h1>
+                <p class="text-muted small mb-0">Listado de proveedores.</p>
             </div>
-            <a th:href="@{/despacho/registrar}" class="btn btn-login">
-                <i class="bi bi-plus-lg me-1"></i> Nuevo despacho
-            </a>
+            <div class="d-flex gap-2">
+                <a th:href="@{/proveedor/habilitar_vista}" class="btn btn-outline-secondary">
+                    <i class="bi bi-toggle2-on me-1"></i> Habilitar / Deshabilitar
+                </a>
+                <a th:href="@{/proveedor/registrar}" class="btn btn-login">
+                    <i class="bi bi-plus-lg me-1"></i> Nuevo proveedor
+                </a>
+            </div>
         </div>
 
         <div class="card border-0 shadow-sm">
@@ -25,43 +30,32 @@
                         <thead>
                             <tr>
                                 <th style="width:80px">Código</th>
-                                <th>N° comprobante</th>
-                                <th>Cliente</th>
-                                <th>Dirección de entrega</th>
-                                <th>Tipo</th>
-                                <th>Estado</th>
-                                <th>Prog. / Entregado</th>
+                                <th>RUC</th>
+                                <th>Razón Social</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Distrito</th>
                                 <th style="width:100px" class="text-end">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="item : ${despachos}">
+                            <tr th:each="item : ${proveedors}">
                                 <td th:text="${item.codigo}">1</td>
-                                <td th:text="${item.venta != null} ? ${item.venta.nroComprobante} : '-'">B001-000001</td>
-                                <td th:text="${item.venta != null and item.venta.cliente != null} ? (${item.venta.cliente.razonSocial != null and !item.venta.cliente.razonSocial.isEmpty()} ? ${item.venta.cliente.razonSocial} : (${item.venta.cliente.nombres} + ' ' + ${item.venta.cliente.apellidoPaterno})) : '-'">
-                                    Cliente
-                                </td>
-                                <td th:text="${item.direccionEntrega ?: '-'}">-</td>
-                                <td th:text="${item.tipoDespacho != null} ? ${item.tipoDespacho.nombre} : '-'">Delivery</td>
-                                <td>
-                                    <span class="badge bg-info text-dark"
-                                          th:text="${item.estadoDespacho != null} ? ${item.estadoDespacho.nombre} : '-'">Pendiente</span>
-                                </td>
-                                <td>
-                                    <span th:text="${item.fechaProgramada != null} ? ${#temporals.format(item.fechaProgramada, 'dd/MM/yyyy HH:mm')} : '-'">-</span>
-                                    /
-                                    <span th:text="${item.fechaEntregaReal != null} ? ${#temporals.format(item.fechaEntregaReal, 'dd/MM/yyyy HH:mm')} : 'pendiente'">pendiente</span>
-                                </td>
+                                <td th:text="${item.ruc}">20000000000</td>
+                                <td th:text="${item.razonSocial}">Razón Social</td>
+                                <td th:text="${item.telefono}">123456789</td>
+                                <td th:text="${item.email}">email@example.com</td>
+                                <td th:text="${item.distrito != null} ? ${item.distrito.nombre} : '-'">Distrito</td>
                                 <td class="text-end">
-                                    <a th:href="@{/despacho/actualizar/{id}(id=${item.codigo})}"
+                                    <a th:href="@{/proveedor/actualizar/{id}(id=${item.codigo})}"
                                        class="btn btn-sm btn-outline-primary" title="Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
                             </tr>
-                            <tr th:if="${despachos.isEmpty()}">
+                            <tr th:if="${proveedors.isEmpty()}">
                                 <td colspan="8" class="text-center text-muted py-4">
-                                    No hay despachos registrados todavía.
+                                    No hay proveedores registrados todavía.
                                 </td>
                             </tr>
                         </tbody>

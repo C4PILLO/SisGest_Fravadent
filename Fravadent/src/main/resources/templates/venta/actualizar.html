@@ -12,18 +12,6 @@
             <i class="bi bi-pencil-square me-1"></i> Editar venta
         </h1>
 
-        <!--
-          PENDIENTE (backend): mismo bug de "estado" fantasma que en listar.html, y
-          cargarCombos() con "clientes", "tipocomprobantes", "metodopagos", "estadoventas".
-
-          OJO: esta vista solo edita los datos de cabecera de la venta (comprobante,
-          cliente, método de pago, estado). NO edita el detalle de productos —
-          eso requeriría lógica adicional (agregar/quitar líneas de una venta ya
-          guardada, recalcular stock, etc.) que no está cubierta por el
-          PostMapping("/actualizar/{id}") genérico. Si se necesita, hablarlo con
-          el equipo antes de construirlo.
-        -->
-
         <div class="alert alert-info small mb-3" style="max-width:700px;">
             <i class="bi bi-info-circle me-1"></i>
             Esta vista solo edita los datos generales de la venta, no el detalle de productos.
@@ -51,61 +39,32 @@
                             <input type="datetime-local" class="form-control" id="fechaHora" th:field="*{fechaHora}" required>
                         </div>
 
-                        <!-- Tipo de comprobante -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Tipo de comprobante</label>
                             <input type="text" class="form-control" disabled
                                    th:value="${venta.tipoComprobante != null} ? ${venta.tipoComprobante.nombre} : ''"
                                    placeholder="Pendiente de combo (backend)">
-                            <!--
-                            <select class="form-select" th:field="*{tipoComprobante.codigo}" required>
-                                <option th:each="t : ${tipocomprobantes}" th:value="${t.codigo}" th:text="${t.nombre}"
-                                        th:selected="${venta.tipoComprobante != null and t.codigo == venta.tipoComprobante.codigo}"></option>
-                            </select>
-                            -->
                         </div>
 
-                        <!-- Cliente -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Cliente</label>
                             <input type="text" class="form-control" disabled
                                    th:value="${venta.cliente != null} ? (${venta.cliente.nombres} + ' ' + ${venta.cliente.apellidoPaterno}) : ''"
                                    placeholder="Pendiente de combo (backend)">
-                            <!--
-                            <select class="form-select" th:field="*{cliente.codigo}" required>
-                                <option th:each="c : ${clientes}" th:value="${c.codigo}"
-                                        th:text="${c.nombres + ' ' + c.apellidoPaterno}"
-                                        th:selected="${venta.cliente != null and c.codigo == venta.cliente.codigo}"></option>
-                            </select>
-                            -->
                         </div>
 
-                        <!-- Método de pago -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Método de pago</label>
                             <input type="text" class="form-control" disabled
                                    th:value="${venta.metodoPago != null} ? ${venta.metodoPago.nombre} : ''"
                                    placeholder="Pendiente de combo (backend)">
-                            <!--
-                            <select class="form-select" th:field="*{metodoPago.codigo}" required>
-                                <option th:each="m : ${metodopagos}" th:value="${m.codigo}" th:text="${m.nombre}"
-                                        th:selected="${venta.metodoPago != null and m.codigo == venta.metodoPago.codigo}"></option>
-                            </select>
-                            -->
                         </div>
 
-                        <!-- Estado de venta -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Estado</label>
                             <input type="text" class="form-control" disabled
                                    th:value="${venta.estadoVenta != null} ? ${venta.estadoVenta.nombre} : ''"
                                    placeholder="Pendiente de combo (backend)">
-                            <!--
-                            <select class="form-select" th:field="*{estadoVenta.codigo}" required>
-                                <option th:each="e : ${estadoventas}" th:value="${e.codigo}" th:text="${e.nombre}"
-                                        th:selected="${venta.estadoVenta != null and e.codigo == venta.estadoVenta.codigo}"></option>
-                            </select>
-                            -->
                         </div>
 
                         <div class="col-md-6">

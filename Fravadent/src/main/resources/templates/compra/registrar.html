@@ -12,27 +12,6 @@
             <i class="bi bi-truck me-1"></i> Nueva compra
         </h1>
 
-        <!--
-          PENDIENTE (backend):
-
-          1) Bug de esquema: DetalleCompraEntity tiene un campo "estado" que no
-             existe en la tabla detalle_compra real (compra sí tiene su columna
-             estado, esa parte está bien). El POST a /compra/transaccional va a
-             fallar al guardar el detalle hasta que se resuelva.
-
-          2) Combos: cargarCombos() en CompraController debe agregar "proveedors"
-             (ojo, así se llama, no "proveedores"), "usuarios", "productos".
-
-          Igual que en venta/registrar.html, uso campos de "código" numérico
-          visibles para Proveedor/Usuario/Producto — así se puede probar el flujo
-          completo hoy con IDs reales, sin esperar los combos.
-        -->
-
-        <div class="alert alert-warning small mb-3">
-            <i class="bi bi-exclamation-triangle me-1"></i>
-            El guardado del detalle va a fallar hasta que se resuelva el bug de "estado" en
-            <code>DetalleCompraEntity</code>. Ver comentario en el código fuente.
-        </div>
 
         <form id="formCompra">
 
@@ -46,35 +25,21 @@
                             <input type="datetime-local" class="form-control" id="fechaHora" required>
                         </div>
 
-                        <!-- Proveedor -->
                         <div class="col-md-6">
-                            <label for="proveedorId" class="form-label small fw-semibold">
-                                Proveedor <span class="text-muted fw-normal">(código, temporal)</span>
-                            </label>
-                            <input type="number" class="form-control" id="proveedorId"
-                                   placeholder="Código de proveedor" required>
-                            <!--
+                            <label for="proveedorId" class="form-label small fw-semibold">Proveedor</label>
                             <select class="form-select" id="proveedorId" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="p : ${proveedors}" th:value="${p.codigo}" th:text="${p.razonSocial}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Usuario que registra -->
                         <div class="col-md-6">
-                            <label for="usuarioId" class="form-label small fw-semibold">
-                                Usuario que registra <span class="text-muted fw-normal">(código, temporal)</span>
-                            </label>
-                            <input type="number" class="form-control" id="usuarioId"
-                                   placeholder="Código de usuario" required>
-                            <!--
+                            <label for="usuarioId" class="form-label small fw-semibold">Usuario que registra</label>
                             <select class="form-select" id="usuarioId" required>
                                 <option value="">Seleccione...</option>
                                 <option th:each="u : ${usuarios}" th:value="${u.codigo}"
                                         th:text="${u.nombres + ' ' + u.apellidoPaterno}"></option>
                             </select>
-                            -->
                         </div>
 
                     </div>
@@ -93,9 +58,7 @@
                         <table class="table table-fravadent align-middle mb-0">
                             <thead>
                                 <tr>
-                                    <th style="width:35%">
-                                        Producto <span class="text-muted fw-normal small">(código, temporal)</span>
-                                    </th>
+                                    <th style="width:35%">Producto</th>
                                     <th style="width:15%">Cantidad</th>
                                     <th style="width:20%">Precio unitario (S/)</th>
                                     <th style="width:20%" class="text-end">Subtotal (S/)</th>
@@ -103,7 +66,6 @@
                                 </tr>
                             </thead>
                             <tbody id="detalleBody">
-                                <!-- Filas agregadas dinámicamente por JS -->
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -131,6 +93,13 @@
 
     </main>
 
+    <div id="productoTemplateContainer" style="display: none;">
+        <select class="form-select form-select-sm" data-field="producto" onchange="seleccionarProducto(this)" required>
+            <option value="" data-precio="0">Seleccione producto...</option>
+            <option th:each="prod : ${productos}" th:value="${prod.codigo}" th:data-precio="${prod.precioCompra}" th:text="${prod.nombreDescripcion}"></option>
+        </select>
+    </div>
+
     <footer th:replace="~{layout/base :: footer}"></footer>
     <th:block th:replace="~{layout/base :: scripts}"></th:block>
 
@@ -138,6 +107,8 @@
         /*<![CDATA[*/
         const URL_TRANSACCIONAL = /*[[@{/compra/transaccional}]]*/ '/fravadent/compra/transaccional';
         const URL_LISTAR = /*[[@{/compra/listar}]]*/ '/fravadent/compra/listar';
+        const CSRF_TOKEN = /*[[${_csrf.token}]]*/ '';
+        const CSRF_HEADER = /*[[${_csrf.headerName}]]*/ 'X-CSRF-TOKEN';
         /*]]>*/
 
         function actualizarMensajeVacio() {
@@ -145,11 +116,23 @@
             document.getElementById('mensajeVacio').style.display = filas === 0 ? 'block' : 'none';
         }
 
+        function seleccionarProducto(selectElement) {
+            const precio = selectElement.options[selectElement.selectedIndex].dataset.precio;
+            const tr = selectElement.closest('tr');
+            const inputPrecio = tr.querySelector('[data-field="precio"]');
+            if (precio) {
+                inputPrecio.value = parseFloat(precio).toFixed(2);
+                calcularTotales();
+            }
+        }
+
         function agregarFila() {
             const tbody = document.getElementById('detalleBody');
             const tr = document.createElement('tr');
+            const productoSelectHtml = document.getElementById('productoTemplateContainer').innerHTML;
+            
             tr.innerHTML = `
-                <td><input type="number" class="form-control form-control-sm" data-field="producto" placeholder="Código producto" required></td>
+                <td>${productoSelectHtml}</td>
                 <td><input type="number" class="form-control form-control-sm" data-field="cantidad" min="1" value="1" required></td>
                 <td><input type="number" step="0.01" min="0" class="form-control form-control-sm" data-field="precio" required></td>
                 <td class="text-end"><span data-field="subtotal">0.00</span></td>
@@ -223,9 +206,16 @@
             };
 
             try {
+                const headers = {
+                    'Content-Type': 'application/json'
+                };
+                if (CSRF_HEADER && CSRF_TOKEN) {
+                    headers[CSRF_HEADER] = CSRF_TOKEN;
+                }
+                
                 const resp = await fetch(URL_TRANSACCIONAL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: headers,
                     body: JSON.stringify(payload)
                 });
                 if (resp.ok) {

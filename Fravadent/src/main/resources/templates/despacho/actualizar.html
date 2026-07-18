@@ -12,13 +12,6 @@
             <i class="bi bi-pencil-square me-1"></i> Editar despacho
         </h1>
 
-        <!--
-          PENDIENTE (backend): mismos 2 pendientes que en registrar.html —
-          bug de esquema (columna "estado" inexistente en la tabla despacho)
-          y cargarCombos() con "ventas", "usuarios", "tipodespachos",
-          "estadodespachos", "distritos".
-        -->
-
         <div class="card border-0 shadow-sm" style="max-width:700px;">
             <div class="card-body p-4">
 
@@ -30,61 +23,37 @@
 
                     <div class="row g-3">
 
-                        <!-- Venta -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Venta</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.venta != null} ? ${despacho.venta.nroComprobante} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{venta.codigo}" required>
                                 <option th:each="v : ${ventas}" th:value="${v.codigo}" th:text="${v.nroComprobante}"
                                         th:selected="${despacho.venta != null and v.codigo == despacho.venta.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Usuario que despacha -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Usuario que despacha</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.usuario != null} ? (${despacho.usuario.nombres} + ' ' + ${despacho.usuario.apellidoPaterno}) : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{usuario.codigo}" required>
                                 <option th:each="u : ${usuarios}" th:value="${u.codigo}"
                                         th:text="${u.nombres + ' ' + u.apellidoPaterno}"
                                         th:selected="${despacho.usuario != null and u.codigo == despacho.usuario.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Tipo de despacho -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Tipo de despacho</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.tipoDespacho != null} ? ${despacho.tipoDespacho.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{tipoDespacho.codigo}" required>
                                 <option th:each="t : ${tipodespachos}" th:value="${t.codigo}" th:text="${t.nombre}"
                                         th:selected="${despacho.tipoDespacho != null and t.codigo == despacho.tipoDespacho.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
-                        <!-- Estado de despacho -->
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Estado</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.estadoDespacho != null} ? ${despacho.estadoDespacho.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{estadoDespacho.codigo}" required>
                                 <option th:each="e : ${estadodespachos}" th:value="${e.codigo}" th:text="${e.nombre}"
                                         th:selected="${despacho.estadoDespacho != null and e.codigo == despacho.estadoDespacho.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-8">
@@ -92,18 +61,12 @@
                             <input type="text" class="form-control" id="direccionEntrega" th:field="*{direccionEntrega}" maxlength="150">
                         </div>
 
-                        <!-- Distrito -->
                         <div class="col-md-4">
                             <label class="form-label small fw-semibold">Distrito</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${despacho.distrito != null} ? ${despacho.distrito.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
-                            <!--
                             <select class="form-select" th:field="*{distrito.codigo}" required>
                                 <option th:each="d : ${distritos}" th:value="${d.codigo}" th:text="${d.nombre}"
                                         th:selected="${despacho.distrito != null and d.codigo == despacho.distrito.codigo}"></option>
                             </select>
-                            -->
                         </div>
 
                         <div class="col-md-6">

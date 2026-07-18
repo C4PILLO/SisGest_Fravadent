@@ -1,20 +1,29 @@
 package pe.com.fravadent.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pe.com.fravadent.controller.generic.GenericoController;
 import pe.com.fravadent.dto.ProveedorDTO;
 import pe.com.fravadent.service.ProveedorService;
+import pe.com.fravadent.service.DistritoService;
 import pe.com.fravadent.service.generic.GenericoService;
 
 @Controller
 @RequestMapping("/proveedor")
 public class ProveedorController extends GenericoController<ProveedorDTO> {
     private final ProveedorService servicio;
+    private final DistritoService distritoService;
 
-    public ProveedorController(ProveedorService servicio) {
+    public ProveedorController(ProveedorService servicio, DistritoService distritoService) {
         this.servicio = servicio;
+        this.distritoService = distritoService;
+    }
+
+    @Override
+    protected void cargarCombos(Model modelo) {
+        modelo.addAttribute("distritos", distritoService.findAllCustom());
     }
 
     @Override

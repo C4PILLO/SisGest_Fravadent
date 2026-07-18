@@ -1,27 +1,19 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{layout/base :: head('Habilitar despachos')}"></head>
+<head th:replace="~{layout/base :: head('Habilitar proveedores')}"></head>
 
 <body>
     <nav th:replace="~{layout/base :: navbar}"></nav>
 
     <main class="container-fluid py-4 px-4">
 
-        <!--
-          PENDIENTE (backend): esta vista depende de que se resuelva el bug de la
-          columna "estado" faltante en la tabla despacho (ver nota en registrar.html).
-          Si el equipo decide que despacho NO debe tener activo/inactivo (porque ya
-          tiene su propio estadoDespacho para el flujo), esta vista y su ruta se
-          pueden eliminar del menú.
-        -->
-
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-                <h1 class="h4 fw-bold mb-0">Habilitar / Deshabilitar despachos</h1>
-                <p class="text-muted small mb-0">Aquí ves todos los despachos, activos e inactivos.</p>
+                <h1 class="h4 fw-bold mb-0">Habilitar / Deshabilitar proveedores</h1>
+                <p class="text-muted small mb-0">Aquí ves todos los proveedores, activos e inactivos.</p>
             </div>
-            <a th:href="@{/despacho/listar}" class="btn btn-outline-secondary">
+            <a th:href="@{/proveedor/listar}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-1"></i> Volver al listado
             </a>
         </div>
@@ -33,37 +25,37 @@
                         <thead>
                             <tr>
                                 <th style="width:80px">Código</th>
-                                <th>N° comprobante</th>
-                                <th>Tipo</th>
+                                <th>RUC</th>
+                                <th>Razón Social</th>
                                 <th style="width:120px">Estado (activo)</th>
                                 <th style="width:160px" class="text-end">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="item : ${despachos}">
+                            <tr th:each="item : ${proveedors}">
                                 <td th:text="${item.codigo}">1</td>
-                                <td th:text="${item.venta != null} ? ${item.venta.nroComprobante} : '-'">B001-000001</td>
-                                <td th:text="${item.tipoDespacho != null} ? ${item.tipoDespacho.nombre} : '-'">Delivery</td>
+                                <td th:text="${item.ruc}">20000000000</td>
+                                <td th:text="${item.razonSocial}">Razón Social</td>
                                 <td>
                                     <span th:if="${item.estado == 'A'}" class="badge bg-success">Activo</span>
                                     <span th:unless="${item.estado == 'A'}" class="badge bg-secondary">Inactivo</span>
                                 </td>
                                 <td class="text-end">
                                     <a th:if="${item.estado == 'A'}"
-                                       th:href="@{/despacho/deshabilitar/{id}(id=${item.codigo})}"
+                                       th:href="@{/proveedor/deshabilitar/{id}(id=${item.codigo})}"
                                        class="btn btn-sm btn-outline-danger">
                                         <i class="bi bi-toggle-off me-1"></i> Deshabilitar
                                     </a>
                                     <a th:unless="${item.estado == 'A'}"
-                                       th:href="@{/despacho/habilitar/{id}(id=${item.codigo})}"
+                                       th:href="@{/proveedor/habilitar/{id}(id=${item.codigo})}"
                                        class="btn btn-sm btn-outline-success">
                                         <i class="bi bi-toggle-on me-1"></i> Habilitar
                                     </a>
                                 </td>
                             </tr>
-                            <tr th:if="${despachos.isEmpty()}">
+                            <tr th:if="${proveedors.isEmpty()}">
                                 <td colspan="5" class="text-center text-muted py-4">
-                                    No hay despachos registrados todavía.
+                                    No hay proveedores registrados todavía.
                                 </td>
                             </tr>
                         </tbody>

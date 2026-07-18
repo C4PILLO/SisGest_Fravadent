@@ -1,5 +1,6 @@
 package pe.com.fravadent.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
@@ -37,6 +38,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteDTO add(ClienteDTO obj) {
         obj.setEstado("A");
+        obj.setFechaRegistro(LocalDate.now());
         ClienteEntity entity = modelMapper.map(obj, ClienteEntity.class);
         return modelMapper.map(repositorio.save(entity), ClienteDTO.class);
     }
@@ -44,6 +46,8 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteDTO update(ClienteDTO obj, Long id) {
         ClienteEntity entity = repositorio.findById(id).get();
+        entity.setDistrito(null);
+        entity.setTipoDocumento(null);
         modelMapper.map(obj, entity);
         return modelMapper.map(repositorio.save(entity), ClienteDTO.class);
     }

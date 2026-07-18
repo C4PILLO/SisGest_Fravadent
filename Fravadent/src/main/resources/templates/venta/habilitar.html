@@ -8,18 +8,6 @@
 
     <main class="container-fluid py-4 px-4">
 
-        <!--
-          PENDIENTE (backend): esta vista usa las rutas genéricas /habilitar/{id} y
-          /deshabilitar/{id}, que dependen del campo "estado" fantasma (bug ya
-          reportado). Además, semánticamente "anular una venta" probablemente
-          debería cambiar estadoVenta a "Anulado" (ya existe ese estado en la
-          tabla estado_venta), no un flag aparte de activo/inactivo. Vale la pena
-          que el equipo decida si:
-            a) arreglan el campo "estado" y lo usan tal cual (como está ahora), o
-            b) quitan "estado" y hacen que estos botones cambien estadoVenta.
-          La vista funciona igual en ambos casos, cambiaría solo la ruta de destino.
-        -->
-
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
                 <h1 class="h4 fw-bold mb-0">Anular / Habilitar ventas</h1>
