@@ -14,6 +14,7 @@ import pe.com.fravadent.dto.wrapper.CompraWrapperDTO;
 import pe.com.fravadent.service.CompraService;
 import pe.com.fravadent.service.ProductoService;
 import pe.com.fravadent.service.ProveedorService;
+import pe.com.fravadent.service.UsuarioService;
 import pe.com.fravadent.service.generic.GenericoService;
 
 @Controller
@@ -22,18 +23,21 @@ public class CompraController extends GenericoController<CompraDTO> {
 	private final CompraService servicio;
 	private final ProveedorService proveedorService;
 	private final ProductoService productoService;
+	private final UsuarioService usuarioService;
 
 	public CompraController(CompraService servicio, ProveedorService proveedorService,
-			ProductoService productoService) {
+			ProductoService productoService, UsuarioService usuarioService) {
 		this.servicio = servicio;
 		this.proveedorService = proveedorService;
 		this.productoService = productoService;
+		this.usuarioService = usuarioService;
 	}
 
 	@Override
 	protected void cargarCombos(Model modelo) {
 		modelo.addAttribute("proveedors", proveedorService.findAllCustom());
 		modelo.addAttribute("productos", productoService.findAllCustom());
+		modelo.addAttribute("usuarios", usuarioService.findAllCustom());
 	}
 
 	@Override

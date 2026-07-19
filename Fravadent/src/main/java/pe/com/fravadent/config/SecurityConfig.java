@@ -69,7 +69,7 @@ public class SecurityConfig {
 	@Bean
 	@Order(2)
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/css/**", "/js/**", "/img/**", "/login").permitAll()
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/css/**", "/js/**", "/img/**", "/login", "/error").permitAll()
 				.anyRequest().authenticated())
 				.formLogin(login -> login.loginPage("/login").defaultSuccessUrl("/inicio", true).permitAll())
 				.logout(logout -> logout.logoutSuccessUrl("/login?logout").invalidateHttpSession(true)

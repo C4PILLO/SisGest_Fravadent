@@ -57,6 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (obj.getDistrito() != null && obj.getDistrito().getCodigo() != null) entity.setDistrito(null);
 		if (obj.getTipoDocumento() != null && obj.getTipoDocumento().getCodigo() != null) entity.setTipoDocumento(null);
 		if (obj.getRol() != null && obj.getRol().getCodigo() != null) entity.setRol(null);
+		if (obj.getSexo() != null && obj.getSexo().getCodigo() != null) entity.setSexo(null);
 
 		String oldPassword = entity.getPassword_hash();
 
