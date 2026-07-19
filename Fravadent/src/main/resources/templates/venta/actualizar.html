@@ -41,30 +41,34 @@
 
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Tipo de comprobante</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${venta.tipoComprobante != null} ? ${venta.tipoComprobante.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
+                            <select class="form-select" th:field="*{tipoComprobante.codigo}">
+                                <option value="">Seleccione...</option>
+                                <option th:each="tc : ${tipocomprobantes}" th:value="${tc.codigo}" th:text="${tc.nombre}"></option>
+                            </select>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Cliente</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${venta.cliente != null} ? (${venta.cliente.nombres} + ' ' + ${venta.cliente.apellidoPaterno}) : ''"
-                                   placeholder="Pendiente de combo (backend)">
+                            <select class="form-select" th:field="*{cliente.codigo}">
+                                <option value="">Seleccione...</option>
+                                <option th:each="c : ${clientes}" th:value="${c.codigo}" th:text="${c.nombres + ' ' + c.apellidoPaterno}"></option>
+                            </select>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Método de pago</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${venta.metodoPago != null} ? ${venta.metodoPago.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
+                            <select class="form-select" th:field="*{metodoPago.codigo}">
+                                <option value="">Seleccione...</option>
+                                <option th:each="mp : ${metodopagos}" th:value="${mp.codigo}" th:text="${mp.nombre}"></option>
+                            </select>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Estado</label>
-                            <input type="text" class="form-control" disabled
-                                   th:value="${venta.estadoVenta != null} ? ${venta.estadoVenta.nombre} : ''"
-                                   placeholder="Pendiente de combo (backend)">
+                            <select class="form-select" th:field="*{estadoVenta.codigo}">
+                                <option value="">Seleccione...</option>
+                                <option th:each="ev : ${estadoventas}" th:value="${ev.codigo}" th:text="${ev.nombre}"></option>
+                            </select>
                         </div>
 
                         <div class="col-md-6">

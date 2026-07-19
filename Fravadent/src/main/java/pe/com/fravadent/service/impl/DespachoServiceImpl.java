@@ -66,11 +66,11 @@ public class DespachoServiceImpl implements DespachoService {
 	@Override
 	public DespachoDTO update(DespachoDTO obj, Long id) {
 		DespachoEntity entity = repositorio.findById(id).get();
-		entity.setVenta(null);
-		entity.setUsuario(null);
-		entity.setTipoDespacho(null);
-		entity.setEstadoDespacho(null);
-		entity.setDistrito(null);
+		if (obj.getVenta() != null && obj.getVenta().getCodigo() != null) entity.setVenta(null);
+		if (obj.getUsuario() != null && obj.getUsuario().getCodigo() != null) entity.setUsuario(null);
+		if (obj.getTipoDespacho() != null && obj.getTipoDespacho().getCodigo() != null) entity.setTipoDespacho(null);
+		if (obj.getEstadoDespacho() != null && obj.getEstadoDespacho().getCodigo() != null) entity.setEstadoDespacho(null);
+		if (obj.getDistrito() != null && obj.getDistrito().getCodigo() != null) entity.setDistrito(null);
 		modelMapper.map(obj, entity);
 		DespachoEntity savedDespacho = repositorio.save(entity);
 

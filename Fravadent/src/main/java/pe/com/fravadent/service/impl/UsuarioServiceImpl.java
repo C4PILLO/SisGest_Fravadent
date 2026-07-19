@@ -54,9 +54,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public UsuarioDTO update(UsuarioDTO obj, Long id) {
 		UsuarioEntity entity = repositorio.findById(id).get();
-		entity.setDistrito(null);
-		entity.setTipoDocumento(null);
-		entity.setRol(null);
+		if (obj.getDistrito() != null && obj.getDistrito().getCodigo() != null) entity.setDistrito(null);
+		if (obj.getTipoDocumento() != null && obj.getTipoDocumento().getCodigo() != null) entity.setTipoDocumento(null);
+		if (obj.getRol() != null && obj.getRol().getCodigo() != null) entity.setRol(null);
 
 		String oldPassword = entity.getPassword_hash();
 

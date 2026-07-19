@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 
 import pe.com.fravadent.entity.DetalleVentaEntity;
+import pe.com.fravadent.entity.VentaEntity;
 import pe.com.fravadent.repository.generic.GenericoRepository;
 
 public interface DetalleVentaRepository extends GenericoRepository<DetalleVentaEntity, Long> {
 	@Query("select e from DetalleVentaEntity e")
 	List<DetalleVentaEntity> findAllCustom();
+
+	List<DetalleVentaEntity> findByVenta(VentaEntity venta);
 }

@@ -50,7 +50,7 @@ public class ProveedorServiceImpl implements ProveedorService {
 	@Override
 	public ProveedorDTO update(ProveedorDTO obj, Long id) {
 		ProveedorEntity entity = repositorio.findById(id).get();
-		entity.setDistrito(null);
+		if (obj.getDistrito() != null && obj.getDistrito().getCodigo() != null) entity.setDistrito(null);
 		modelMapper.map(obj, entity);
 		return modelMapper.map(repositorio.save(entity), ProveedorDTO.class);
 	}

@@ -48,9 +48,9 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public ProductoDTO update(ProductoDTO obj, Long id) {
 		ProductoEntity entity = repositorio.findById(id).get();
-		entity.setCategoria(null);
-		entity.setMarca(null);
-		entity.setUnidadMedida(null);
+		if (obj.getCategoria() != null && obj.getCategoria().getCodigo() != null) entity.setCategoria(null);
+		if (obj.getMarca() != null && obj.getMarca().getCodigo() != null) entity.setMarca(null);
+		if (obj.getUnidadMedida() != null && obj.getUnidadMedida().getCodigo() != null) entity.setUnidadMedida(null);
 		modelMapper.map(obj, entity);
 		return modelMapper.map(repositorio.save(entity), ProductoDTO.class);
 	}

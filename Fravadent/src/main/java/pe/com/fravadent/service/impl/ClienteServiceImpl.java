@@ -50,8 +50,8 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public ClienteDTO update(ClienteDTO obj, Long id) {
 		ClienteEntity entity = repositorio.findById(id).get();
-		entity.setDistrito(null);
-		entity.setTipoDocumento(null);
+		if (obj.getDistrito() != null && obj.getDistrito().getCodigo() != null) entity.setDistrito(null);
+		if (obj.getTipoDocumento() != null && obj.getTipoDocumento().getCodigo() != null) entity.setTipoDocumento(null);
 		modelMapper.map(obj, entity);
 		return modelMapper.map(repositorio.save(entity), ClienteDTO.class);
 	}

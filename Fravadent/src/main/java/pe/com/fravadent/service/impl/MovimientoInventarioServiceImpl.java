@@ -84,9 +84,9 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
 	@Override
 	public MovimientoInventarioDTO update(MovimientoInventarioDTO obj, Long id) {
 		MovimientoInventarioEntity entity = repositorio.findById(id).get();
-		entity.setProducto(null);
-		entity.setTipoMovimiento(null);
-		entity.setUsuario(null);
+		if (obj.getProducto() != null && obj.getProducto().getCodigo() != null) entity.setProducto(null);
+		if (obj.getTipoMovimiento() != null && obj.getTipoMovimiento().getCodigo() != null) entity.setTipoMovimiento(null);
+		if (obj.getUsuario() != null && obj.getUsuario().getCodigo() != null) entity.setUsuario(null);
 		modelMapper.map(obj, entity);
 		return modelMapper.map(repositorio.save(entity), MovimientoInventarioDTO.class);
 	}

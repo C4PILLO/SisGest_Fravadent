@@ -72,8 +72,8 @@ public class CompraServiceImpl implements CompraService {
 	@Override
 	public CompraDTO update(CompraDTO obj, Long id) {
 		CompraEntity entity = repositorio.findById(id).get();
-		entity.setProveedor(null);
-		entity.setUsuario(null);
+		if (obj.getProveedor() != null && obj.getProveedor().getCodigo() != null) entity.setProveedor(null);
+		if (obj.getUsuario() != null && obj.getUsuario().getCodigo() != null) entity.setUsuario(null);
 		modelMapper.map(obj, entity);
 		return modelMapper.map(repositorio.save(entity), CompraDTO.class);
 	}
